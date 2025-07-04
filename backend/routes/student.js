@@ -4,4 +4,4 @@ import { getAllStudents } from '../controllers/studentController.js';
 const studentRouter = express.Router();
 studentRouter.get('/', getAllStudents);
 
-export default studentRouter;
+export default studentRouter ;

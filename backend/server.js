@@ -15,4 +15,4 @@ router.use(express.json());
 router.use("/student", studentRouter); 
 app.use("/api", router);
 
-export default app;
+export default app ;

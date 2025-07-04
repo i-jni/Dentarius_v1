@@ -7,4 +7,4 @@ export const getAllStudents = async (req, res, next) => {
   } catch (error) {
     next(error);
   }
-};
+} ;
