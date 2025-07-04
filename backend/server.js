@@ -1,6 +1,6 @@
 import express from "express";
 import cors from "cors";
-// import studentRouter from "./routes/student.js"; 
+import studentRouter from "./routes/student.js"; 
 
 const app = express();
 const router = express.Router();
@@ -12,7 +12,7 @@ router.use(cors({
 }));
 router.use(express.json());
 
-// router.use("/student", studentRouter); 
+router.use("/student", studentRouter); 
 app.use("/api", router);
 
-export default app;
+export default app ;
