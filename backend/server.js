@@ -6,6 +6,7 @@ import authRouter from "./routes/auth.js";
 import courseRouter from "./routes/course.js";
 import levelRouter from "./routes/level.js";
 import countryRouter from "./routes/country.js";
+import courseTopicRouter from "./routes/courseTopic.js";
 
 
 const app = express();
@@ -23,6 +24,7 @@ router.use("/auth", authRouter);
 router.use("/course", courseRouter);
 router.use("/level", levelRouter);
 router.use("/country", countryRouter);
+router.use("/course-topic", courseTopicRouter);
 router.use(errorRouter);
 
 app.use("/api", router);
