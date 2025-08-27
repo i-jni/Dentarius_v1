@@ -5,6 +5,7 @@ import errorRouter from "./routes/error.js";
 import authRouter from "./routes/auth.js";
 import courseRouter from "./routes/course.js";
 import levelRouter from "./routes/level.js";
+import countryRouter from "./routes/country.js";
 
 
 const app = express();
@@ -21,6 +22,7 @@ router.use("/student", studentRouter);
 router.use("/auth", authRouter);
 router.use("/course", courseRouter);
 router.use("/level", levelRouter);
+router.use("/country", countryRouter);
 router.use(errorRouter);
 
 app.use("/api", router);
