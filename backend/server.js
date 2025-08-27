@@ -3,6 +3,7 @@ import cors from "cors";
 import studentRouter from "./routes/student.js"; 
 import errorRouter from "./routes/error.js";
 import authRouter from "./routes/auth.js";
+import courseRouter from "./routes/course.js";
 
 
 
@@ -18,6 +19,7 @@ router.use(express.json());
 
 router.use("/student", studentRouter); 
 router.use("/auth", authRouter);
+router.use("/course", courseRouter);
 router.use(errorRouter);
 
 app.use("/api", router);
