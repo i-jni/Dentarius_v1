@@ -6,13 +6,17 @@ import {
   updateStudent, 
   deleteStudent 
 } from '../controllers/studentController.js';
+import { authMiddleware } from '../middleware/authMiddleware.js';
 
 const studentRouter = express.Router();
 
+// Routes publiques (non protégées) pour l'instant...
 studentRouter.get('/', getAllStudents);
 studentRouter.get('/:id', getStudentById);
-studentRouter.post('/', createStudent);
-studentRouter.put('/:id', updateStudent);
-studentRouter.delete('/:id', deleteStudent);
+
+// Routes protégées (nécessitent JWT)
+studentRouter.post('/', authMiddleware, createStudent);
+studentRouter.put('/:id', authMiddleware, updateStudent);
+studentRouter.delete('/:id', authMiddleware, deleteStudent);
 
 export default studentRouter;
