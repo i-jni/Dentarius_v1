@@ -7,6 +7,7 @@ import courseRouter from "./routes/course.js";
 import levelRouter from "./routes/level.js";
 import countryRouter from "./routes/country.js";
 import courseTopicRouter from "./routes/courseTopic.js";
+import { setupSwagger } from "./docs/swagger.js";
 
 
 const app = express();
@@ -18,6 +19,9 @@ router.use(cors({
   credentials: true,
 }));
 router.use(express.json());
+
+// Setup Swagger  
+setupSwagger(app);
 
 router.use("/student", studentRouter); 
 router.use("/auth", authRouter);
