@@ -1,6 +1,6 @@
 // __tests__/formatters.test.js
 import { expect, test, describe } from '@jest/globals';
-import { formatDate, capitalize } from '../utils/formatters.js';
+import { formatDate, capitalize } from '../../utils/formatters.js';
 
 describe('Formatters', () => {
   test('formatDate should format date correctly', () => {

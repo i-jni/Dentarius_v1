@@ -1,6 +1,6 @@
 // __tests__/jwt.test.js
 import { expect, test, describe } from '@jest/globals';
-import { generateToken, verifyToken } from '../services/jwt.js';
+import { generateToken, verifyToken } from '../../services/jwt.js';
 
 describe('JWT Service', () => {
   test('generateToken should create a token', () => {

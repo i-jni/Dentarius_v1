@@ -4,7 +4,7 @@ import {
   createStudentSchema as studentSchema, 
   loginSchema, 
   registerSchema 
-} from '../validators/schemas.js';
+} from '../../validators/schemas.js';
 
 
 describe('Validation Schemas', () => {

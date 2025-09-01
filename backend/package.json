@@ -9,7 +9,9 @@
     "start": "node index.js",
     "prisma": "prisma",
     "seed": "node prisma/seed/index.js",
-    "test:watch": "node --experimental-vm-modules node_modules/jest/bin/jest.js --watch",
+    "test:unit": "node --experimental-vm-modules node_modules/jest/bin/jest.js __tests__/unit/",  
+    "test:integration": "node --experimental-vm-modules node_modules/jest/bin/jest.js __tests__/integration/",  
+    "test:security": "node --experimental-vm-modules node_modules/jest/bin/jest.js __tests__/security/",  
     "test:coverage": "node --experimental-vm-modules node_modules/jest/bin/jest.js --coverage"
   },
   "keywords": [],

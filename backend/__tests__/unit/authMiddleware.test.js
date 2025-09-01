@@ -1,7 +1,7 @@
 // __tests__/authMiddleware.test.js
 import { expect, test, describe, jest } from '@jest/globals';
-import { authMiddleware } from '../middleware/authMiddleware.js';
-import { generateToken } from '../services/jwt.js';
+import { authMiddleware } from '../../middleware/authMiddleware.js';
+import { generateToken } from '../../services/jwt.js';
 
 describe('Auth Middleware', () => {
   test('should call next() with valid token', () => {
