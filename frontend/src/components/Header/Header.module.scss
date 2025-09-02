@@ -1,0 +1,103 @@
+// src/components/Header/Header.module.scss
+@import '../../assets/scss/abstracts/variables';
+@import '../../assets/scss/abstracts/mixins';
+
+.header {
+  background-color: $white;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  position: sticky;
+  top: 0;
+  z-index: $z-index-sticky;
+}
+
+.headerContent {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: $spacing-md 0;
+  
+  @include responsive(mobile) {
+    flex-wrap: wrap;
+  }
+}
+
+.logo {
+  font-family: $font-primary;
+  font-size: 1.5rem;
+  font-weight: bold;
+  color: $primary;
+  text-decoration: none;
+  
+  &:hover {
+    color: darken($primary, 10%);
+  }
+}
+
+.nav {
+  @include responsive(mobile) {
+    order: 3;
+    width: 100%;
+    margin-top: $spacing-md;
+  }
+}
+
+.navList {
+  display: flex;
+  gap: $spacing-lg;
+  
+  @include responsive(mobile) {
+    justify-content: center;
+  }
+}
+
+.navLink {
+  color: $grey-700;
+  text-decoration: none;
+  font-weight: 500;
+  padding: $spacing-xs 0;
+  position: relative;
+  
+  &:hover {
+    color: $primary;
+  }
+  
+  &::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 0;
+    height: 2px;
+    background-color: $primary;
+    transition: width 0.3s ease;
+  }
+  
+  &:hover::after {
+    width: 100%;
+  }
+}
+
+.activeLink {
+  @extend .navLink;
+  color: $primary;
+  
+  &::after {
+    width: 100%;
+  }
+}
+
+.authActions {
+  display: flex;
+  align-items: center;
+  gap: $spacing-md;
+}
+
+.userName {
+  font-weight: 500;
+  color: $grey-700;
+}
+
+.authButton {
+  font-size: 0.875rem;
+  padding: 0.5rem 1rem;
+}
