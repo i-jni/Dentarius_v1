@@ -1,0 +1,57 @@
+// src/components/TextMedia/TextMedia.module.scss
+@use "sass:color";
+@import '../../assets/scss/abstracts/variables';
+@import '../../assets/scss/abstracts/mixins';
+
+.textMedia {
+  display: flex;
+  flex-direction: column;
+  gap: $spacing-xl;
+  margin: $spacing-xxl 0;
+  
+  @include responsive(tablet) {
+    flex-direction: row;
+    align-items: center;
+  }
+  
+  &.reverse {
+    @include responsive(tablet) {
+      flex-direction: row-reverse;
+    }
+  }
+}
+
+.mediaContainer {
+  flex: 1;
+  
+  @include responsive(tablet) {
+    flex: 0 0 45%;
+  }
+}
+
+.media {
+  width: 100%;
+  height: auto;
+  border-radius: $border-radius-lg;
+  @include shadow(2);
+}
+
+.content {
+  flex: 1;
+  padding: $spacing-md;
+  
+  @include responsive(tablet) {
+    padding: $spacing-lg;
+  }
+}
+
+.text {
+  margin: $spacing-md 0 $spacing-lg;
+  color: $grey-700;
+  font-size: 1.1rem;
+  line-height: 1.6;
+}
+
+.cta {
+  margin-top: $spacing-lg;
+}

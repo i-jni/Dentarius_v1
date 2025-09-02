@@ -1,0 +1,109 @@
+// src/components/Accordion/Accordion.module.scss
+@use "sass:color";
+@import '../../assets/scss/abstracts/variables';
+@import '../../assets/scss/abstracts/mixins';
+
+.accordion {
+  margin: $spacing-xl 0;
+  border-radius: $border-radius-md;
+  overflow: hidden;
+  @include shadow(1);
+}
+
+.accordionGroupTitle {
+  margin-bottom: $spacing-lg;
+  text-align: center;
+}
+
+.accordionItem {
+  border-bottom: 1px solid $grey-300;
+  
+  &:last-child {
+    border-bottom: none;
+  }
+  
+  &.open {
+    .accordionHeader {
+      background-color: $grey-200;
+    }
+    
+    .accordionIcon {
+      transform: rotate(180deg);
+    }
+  }
+}
+
+.accordionHeader {
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: $spacing-lg;
+  background-color: $white;
+  cursor: pointer;
+  @include transition(background-color);
+  border: none;
+  text-align: left;
+  
+  &:hover {
+    background-color: $grey-100;
+  }
+}
+
+.accordionTitle {
+  font-family: $font-primary;
+  font-weight: 600;
+  font-size: 1.1rem;
+  color: $dark;
+}
+
+.accordionIcon {
+  width: 20px;
+  height: 20px;
+  position: relative;
+  @include transition(transform);
+  
+  &::before,
+  &::after {
+    content: '';
+    position: absolute;
+    background-color: $primary;
+    top: 50%;
+    left: 0;
+    width: 100%;
+    height: 2px;
+    margin-top: -1px;
+  }
+  
+  &::after {
+    transform: rotate(90deg);
+    @include transition(transform);
+  }
+  
+  .open & {
+    &::after {
+      transform: rotate(0);
+    }
+  }
+}
+
+.accordionContent {
+  max-height: 0;
+  overflow: hidden;
+  @include transition(max-height, 0.3s);
+}
+
+.accordionBody {
+  padding: $spacing-lg;
+  background-color: $white;
+  color: $grey-700;
+  line-height: 1.6;
+  
+  p {
+    margin-bottom: $spacing-md;
+    
+    &:last-child {
+      margin-bottom: 0;
+    }
+  }
+}

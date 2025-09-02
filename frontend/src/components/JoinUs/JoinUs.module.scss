@@ -1,0 +1,58 @@
+// src/components/JoinUs/JoinUs.module.scss
+@use "sass:color";
+@import '../../assets/scss/abstracts/variables';
+@import '../../assets/scss/abstracts/mixins';
+
+.joinUs {
+  padding: $spacing-xxl $spacing-lg;
+  border-radius: $border-radius-lg;
+  text-align: center;
+  margin: $spacing-xxl 0;
+  @include shadow(2);
+  
+  &.primary {
+    background-color: $primary;
+    color: $white;
+  }
+  
+  &.secondary {
+    background-color: $secondary;
+    color: $white;
+  }
+  
+  &.dark {
+    background-color: $dark;
+    color: $white;
+  }
+  
+  &.light {
+    background-color: $grey-200;
+    color: $grey-800;
+  }
+}
+
+.content {
+  max-width: 800px;
+  margin: 0 auto;
+}
+
+.title {
+  margin-bottom: $spacing-md;
+}
+
+.subtitle {
+  font-size: 1.25rem;
+  margin-bottom: $spacing-xl;
+  opacity: 0.9;
+}
+
+.actions {
+  display: flex;
+  flex-direction: column;
+  gap: $spacing-md;
+  justify-content: center;
+  
+  @include responsive(tablet) {
+    flex-direction: row;
+  }
+}
