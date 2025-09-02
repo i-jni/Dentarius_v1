@@ -3,13 +3,25 @@ import apiClient from './client';
 
 export const authService = {
   login: async (credentials) => {
-    const data = await apiClient.post('/auth/login', credentials);
-    return data;
+    try {
+      const data = await apiClient.post('/auth/login', credentials);
+      return data;
+    } catch (error) {
+      console.error('Erreur de connexion:', error);
+      throw error;
+    }
   },
   
   register: async (userData) => {
-    const data = await apiClient.post('/auth/register', userData);
-    return data;
+    try {
+      console.log('Envoi des données au serveur:', userData);
+      const data = await apiClient.post('/auth/register', userData);
+      console.log('Réponse du serveur:', data);
+      return data;
+    } catch (error) {
+      console.error('Erreur d\'inscription:', error);
+      throw error;
+    }
   },
   
   logout: () => {

@@ -1,0 +1,98 @@
+// src/components/Footer/Footer.module.scss
+@import '../../assets/scss/abstracts/variables';
+@import '../../assets/scss/abstracts/mixins';
+
+.footer {
+  background-color: $dark;
+  color: $white;
+  padding: $spacing-xl 0 $spacing-md;
+  margin-top: auto;
+}
+
+.footerContent {
+  display: flex;
+  flex-wrap: wrap;
+  gap: $spacing-xl;
+  margin-bottom: $spacing-xl;
+  
+  @include responsive(tablet) {
+    flex-wrap: nowrap;
+  }
+}
+
+.footerLogo {
+  flex: 1 1 100%;
+  
+  @include responsive(tablet) {
+    flex: 0 0 40%;
+  }
+}
+
+.logo {
+  font-family: $font-primary;
+  font-size: 1.5rem;
+  font-weight: bold;
+  color: $white;
+  text-decoration: none;
+  margin-bottom: $spacing-sm;
+  display: inline-block;
+}
+
+.tagline {
+  color: $grey-400;
+  margin-top: $spacing-sm;
+}
+
+.footerLinks {
+  flex: 1 1 100%;
+  display: flex;
+  flex-wrap: wrap;
+  gap: $spacing-xl;
+  
+  @include responsive(tablet) {
+    flex: 0 0 50%;
+    justify-content: flex-end;
+  }
+}
+
+.linkColumn {
+  flex: 1 1 40%;
+  min-width: 120px;
+}
+
+.linkTitle {
+  font-family: $font-primary;
+  font-size: 1.125rem;
+  margin-bottom: $spacing-md;
+  color: $white;
+}
+
+.linkList {
+  list-style: none;
+  padding: 0;
+  
+  li {
+    margin-bottom: $spacing-sm;
+  }
+  
+  a {
+    color: $grey-400;
+    text-decoration: none;
+    transition: color 0.2s ease;
+    
+    &:hover {
+      color: $white;
+    }
+  }
+}
+
+.footerBottom {
+  border-top: 1px solid rgba($white, 0.1);
+  padding-top: $spacing-md;
+  text-align: center;
+}
+
+.copyright {
+  color: $grey-500;
+  font-size: 0.875rem;
+}
