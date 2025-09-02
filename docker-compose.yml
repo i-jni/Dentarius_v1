@@ -1,0 +1,62 @@
+version: '3.8'
+
+services:
+  # Service MySQL
+  db:
+    image: mysql:8.0
+    restart: always
+    environment:
+      MYSQL_ROOT_PASSWORD: rootpassword
+      MYSQL_DATABASE: dentarius
+      MYSQL_USER: dentarius
+      MYSQL_PASSWORD: dentarius
+    ports:
+      - "3307:3306"
+    volumes:
+      - mysql-data:/var/lib/mysql
+      - ./db/init.sql:/docker-entrypoint-initdb.d/init.sql
+    networks:
+      - dentarius-network
+
+  # Service Backend
+  backend:
+    build: ./backend
+    restart: always
+    depends_on:
+      - db
+    environment:
+      - NODE_ENV=production
+      - DB_HOST=db
+      - DB_USER=dentarius
+      - DB_PASSWORD=dentarius
+      - DB_NAME=dentarius
+      - JWT_SECRET=your_jwt_secret_key
+      - PORT=3001
+    ports:
+      - "3001:3001"
+    volumes:
+      - ./backend:/app
+      - /app/node_modules
+    networks:
+      - dentarius-network
+
+  # Service Frontend
+  frontend:
+    build: ./frontend
+    restart: always
+    depends_on:
+      - backend
+    ports:
+      - "80:80"
+    volumes:
+      - ./frontend:/app
+      - /app/node_modules
+    networks:
+      - dentarius-network
+      
+networks:
+  dentarius-network:
+    driver: bridge
+
+volumes:
+  mysql-data:
