@@ -1,0 +1,45 @@
+// src/atomes/404/Quatre.module.scss
+@import '../../assets/scss/abstracts/variables';
+@import '../../assets/scss/abstracts/mixins';
+
+.errorContainer {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: $spacing-xxl $spacing-md;
+  text-align: center;
+  min-height: 50vh;
+}
+
+.errorCode {
+  font-size: 8rem;
+  font-weight: bold;
+  font-family: $font-primary;
+  color: $primary;
+  text-shadow: 
+    0 1px 0 $grey-400, 
+    0 2px 0 $grey-400, 
+    0 3px 0 $grey-400, 
+    0 4px 0 $grey-400, 
+    0 5px 0 $grey-400, 
+    0 6px 1px rgba(0,0,0,.1), 
+    0 0 5px rgba(0,0,0,.1), 
+    0 1px 3px rgba(0,0,0,.3), 
+    0 3px 5px rgba(0,0,0,.2), 
+    0 5px 10px rgba(0,0,0,.25), 
+    0 10px 10px rgba(0,0,0,.2), 
+    0 20px 20px rgba(0,0,0,.15);
+  margin-bottom: $spacing-lg;
+  
+  @include responsive(tablet) {
+    font-size: 12rem;
+  }
+}
+
+.errorMessage {
+  font-size: 1.5rem;
+  color: $grey-700;
+  margin-bottom: $spacing-xl;
+  max-width: 600px;
+}

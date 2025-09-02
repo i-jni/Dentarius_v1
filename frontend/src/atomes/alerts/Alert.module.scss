@@ -1,0 +1,67 @@
+// src/atomes/alerts/Alert.module.scss
+@import '../../assets/scss/abstracts/variables';
+@import '../../assets/scss/abstracts/mixins';
+
+.alert {
+  display: flex;
+  align-items: flex-start;
+  padding: 1rem;
+  border-radius: 8px;
+  margin-bottom: 1rem;
+}
+
+.icon {
+  margin-right: 0.75rem;
+  font-size: 1.25rem;
+  display: flex;
+  align-items: center;
+}
+
+.content {
+  flex: 1;
+}
+
+.closeButton {
+  background: transparent;
+  border: none;
+  font-size: 1.25rem;
+  cursor: pointer;
+  padding: 0;
+  margin-left: 0.75rem;
+  opacity: 0.7;
+  transition: opacity 0.2s ease;
+  
+  &:hover {
+    opacity: 1;
+  }
+  
+  &:focus {
+    outline: none;
+    opacity: 1;
+  }
+}
+
+// Variants
+.info {
+  background-color: rgba($info, 0.1);
+  border-left: 4px solid $info;
+//   color: color.adjust($info, 10%);
+}
+
+.success {
+  background-color: rgba(#58a39d, 0.1);
+  border-left: 4px solid #58a39d;
+  color: color.adjust(#58a39d, 10%);
+}
+
+.warning {
+  background-color: rgba(#F0AD4E, 0.1);
+  border-left: 4px solid #F0AD4E;
+  color: color.adjust(#F0AD4E, 20%);
+}
+
+.error {
+  background-color: rgba(#B15252, 0.1);
+  border-left: 4px solid #B15252;
+  color: color.adjust(#B15252, 10%);
+}

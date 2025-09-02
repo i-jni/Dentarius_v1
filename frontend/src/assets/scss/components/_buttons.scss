@@ -26,7 +26,7 @@
     color: $white;
     
     &:hover, &:focus {
-      background-color: darken($primary, 5%);
+    //   background-color: color.adjust($primary, 5%);
     }
   }
   
@@ -35,7 +35,7 @@
     color: $white;
     
     &:hover, &:focus {
-      background-color: darken($secondary, 5%);
+      // background-color: color.adjust($secondary, 5%);
     }
   }
   
@@ -44,7 +44,7 @@
     color: $white;
     
     &:hover, &:focus {
-      background-color: darken($tertiary, 5%);
+      // background-color: color.adjust($tertiary, 5%);
     }
   }
   
@@ -53,7 +53,7 @@
     color: $white;
     
     &:hover, &:focus {
-      background-color: darken($info, 5%);
+    //   background-color: color.adjust($info, 5%);
     }
   }
   
@@ -62,7 +62,7 @@
     color: $white;
     
     &:hover, &:focus {
-      background-color: darken($dark, 5%);
+      // background-color: color.adjust($dark, 5%);
     }
   }
   
@@ -110,14 +110,14 @@
   @extend .btn--secondary;
 }
 
-.blue {
+.info {
   @extend .btn--info;
 }
 
-.beige {
+.primary {
   @extend .btn--primary;
 }
 
-.darkblue {
+.dark {
   @extend .btn--dark;
 }

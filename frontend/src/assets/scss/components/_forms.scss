@@ -145,7 +145,7 @@
     color: $white;
     
     &:hover {
-      background-color: darken($primary, 10%);
+    //   background-color: color.adjust($primary, 10%);
     }
     
     &:disabled {
