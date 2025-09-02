@@ -1,0 +1,59 @@
+// src/atomes/badges/Badge.module.scss
+@import '../../assets/scss/helpers/variables';
+@import '../../assets/scss/helpers/mixins';
+
+.badge {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 20px;
+  font-weight: 500;
+  white-space: nowrap;
+}
+
+// Variants
+.primary {
+  background-color: $info;
+  color: $white;
+}
+
+.secondary {
+  background-color: $primary;
+  color: $white;
+}
+
+.success {
+  background-color: #58a39d;
+  color: $white;
+}
+
+.danger {
+  background-color: #B15252;
+  color: $white;
+}
+
+.warning {
+  background-color: #F0AD4E;
+  color: $dark;
+}
+
+.info {
+  background-color: $primary;
+  color: $tertiary;
+}
+
+// Sizes
+.small {
+  padding: 0.25rem 0.5rem;
+  font-size: 0.75rem;
+}
+
+.medium {
+  padding: 0.35rem 0.75rem;
+  font-size: 0.875rem;
+}
+
+.large {
+  padding: 0.5rem 1rem;
+  font-size: 1rem;
+}

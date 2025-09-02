@@ -1,0 +1,102 @@
+// src/atomes/titles/titles.module.scss
+@import '../../assets/scss/abstracts/variables';
+@import '../../assets/scss/abstracts/mixins';
+
+// Mixins pour les styles communs
+@mixin heading-styles {
+  margin-top: 0;
+  margin-bottom: 1rem;
+  line-height: 1.2;
+//   font-family: $flameBold;
+  color: $dark;
+  transition: color 0.2s ease;
+}
+
+// Classes de base
+.centered {
+  text-align: center;
+}
+
+.light {
+  color: $white !important;
+}
+
+.secondary {
+  color: $primary !important;
+}
+
+.dark {
+  color: $tertiary !important;
+}
+
+.with-underline {
+  position: relative;
+  padding-bottom: 0.5rem;
+  
+  &::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 60px;
+    height: 3px;
+    background-color: currentColor;
+  }
+  
+  &.centered::after {
+    left: 50%;
+    transform: translateX(-50%);
+  }
+}
+
+// Styles spécifiques pour chaque niveau de titre
+.heading1 {
+  @include heading-styles;
+  font-size: 34px;
+  letter-spacing: -0.3px;
+  
+  @include responsive(desktop) {
+    font-size: 42px;
+  }
+}
+
+.heading2 {
+  @include heading-styles;
+  font-size: 26px;
+  letter-spacing: -0.3px;
+  
+  @include responsive(desktop) {
+    font-size: 34px;
+  }
+}
+
+.heading3 {
+  @include heading-styles;
+  font-size: 18px;
+  
+  @include responsive(desktop) {
+    font-size: 22px;
+  }
+}
+
+.heading4 {
+  @include heading-styles;
+  font-size: 16px;
+  letter-spacing: 0.1px;
+}
+
+// Animation
+.animated {
+  animation: fadeInUp 0.6s ease-out forwards;
+}
+
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}

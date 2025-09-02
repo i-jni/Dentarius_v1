@@ -4,9 +4,9 @@
 }
 
 // Fonction pour assombrir une couleur
-@function darken-custom($color, $percentage) {
-  @return darken($color, $percentage);
-}
+// @function darken-custom($color, $percentage) {
+// //   @return color.adjust($color, $percentage);
+// }
 
 // Fonction pour éclaircir une couleur
 @function lighten-custom($color, $percentage) {

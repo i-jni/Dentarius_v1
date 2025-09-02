@@ -1,0 +1,49 @@
+// src/atomes/cards/Card.module.scss
+@import '../../assets/scss/helpers/variables';
+@import '../../assets/scss/helpers/mixins';
+
+.card {
+  background-color: $white;
+  border-radius: 12px;
+  overflow: hidden;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+// Variants
+.default {
+  border: none;
+}
+
+.outlined {
+  border: 1px solid $grey-400;
+}
+
+.interactive {
+  cursor: pointer;
+  
+  &:hover {
+    transform: translateY(-5px);
+  }
+  
+  &:focus-visible {
+    outline: none;
+    box-shadow: 0 0 0 3px rgba($info, 0.4);
+  }
+}
+
+// Elevations
+.elevation-none {
+  box-shadow: none;
+}
+
+.elevation-low {
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+}
+
+.elevation-medium {
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.1);
+}
+
+.elevation-high {
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.15);
+}

@@ -1,0 +1,71 @@
+// src/atomes/shares/shareRs.module.scss
+@use "sass:color";
+@import '../../assets/scss/abstracts/variables';
+@import '../../assets/scss/abstracts/mixins';
+
+.share {
+  display: flex;
+  z-index: $z-index-fixed;
+  
+  &.fixed {
+    position: fixed;
+    right: 0;
+    bottom: 0;
+    flex-direction: column;
+  }
+  
+  &.inline {
+    position: relative;
+    flex-direction: row;
+    justify-content: center;
+    margin: $spacing-md 0;
+  }
+  
+  a {
+    width: 36px;
+    height: 36px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    margin: $spacing-sm;
+    border-radius: 50%;
+    color: $white;
+    opacity: 0.85;
+    @include transition(all, 0.2s);
+    
+    &:hover, &:focus {
+      opacity: 1;
+      transform: translateY(-3px);
+      @include shadow(2);
+    }
+    
+    @include responsive(tablet) {
+      width: 42px;
+      height: 42px;
+    }
+  }
+  
+  .facebook {
+    background-color: #3b5998;
+  }
+  
+  .twitter {
+    background-color: #1da1f2;
+  }
+  
+  .instagram {
+    background: linear-gradient(45deg, #f09433 0%, #e6683c 25%, #dc2743 50%, #cc2366 75%, #bc1888 100%);
+  }
+  
+  .srOnly {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    padding: 0;
+    margin: -1px;
+    overflow: hidden;
+    clip: rect(0, 0, 0, 0);
+    white-space: nowrap;
+    border-width: 0;
+  }
+}
