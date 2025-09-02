@@ -1,0 +1,19 @@
+// Fonction pour convertir px en rem
+@function rem($pixels, $context: 16) {
+  @return ($pixels / $context) * 1rem;
+}
+
+// Fonction pour assombrir une couleur
+@function darken-custom($color, $percentage) {
+  @return darken($color, $percentage);
+}
+
+// Fonction pour éclaircir une couleur
+@function lighten-custom($color, $percentage) {
+  @return lighten($color, $percentage);
+}
+
+// Fonction pour obtenir une couleur avec opacité
+@function with-opacity($color, $opacity) {
+  @return rgba($color, $opacity);
+}

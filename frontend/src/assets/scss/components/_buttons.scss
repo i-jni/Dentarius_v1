@@ -1,0 +1,123 @@
+@import '../abstracts/variables';
+@import '../abstracts/mixins';
+
+.btn {
+  display: inline-block;
+  padding: 0.75rem 1.5rem;
+  border-radius: $border-radius-md;
+  font-family: $font-primary;
+  font-weight: 600;
+  text-align: center;
+  cursor: pointer;
+  @include transition(all, 0.2s);
+  
+  &:hover, &:focus {
+    transform: translateY(-2px);
+    @include shadow(2);
+  }
+  
+  &:active {
+    transform: translateY(0);
+  }
+  
+  // Variantes de couleur
+  &--primary {
+    background-color: $primary;
+    color: $white;
+    
+    &:hover, &:focus {
+      background-color: darken($primary, 5%);
+    }
+  }
+  
+  &--secondary {
+    background-color: $secondary;
+    color: $white;
+    
+    &:hover, &:focus {
+      background-color: darken($secondary, 5%);
+    }
+  }
+  
+  &--tertiary {
+    background-color: $tertiary;
+    color: $white;
+    
+    &:hover, &:focus {
+      background-color: darken($tertiary, 5%);
+    }
+  }
+  
+  &--info {
+    background-color: $info;
+    color: $white;
+    
+    &:hover, &:focus {
+      background-color: darken($info, 5%);
+    }
+  }
+  
+  &--dark {
+    background-color: $dark;
+    color: $white;
+    
+    &:hover, &:focus {
+      background-color: darken($dark, 5%);
+    }
+  }
+  
+  &--outline {
+    background-color: transparent;
+    border: 1px solid currentColor;
+    
+    &.btn--primary {
+      color: $primary;
+    }
+    
+    &.btn--secondary {
+      color: $secondary;
+    }
+    
+    &.btn--tertiary {
+      color: $tertiary;
+    }
+  }
+  
+  // Variantes de taille
+  &--sm {
+    padding: 0.5rem 1rem;
+    font-size: 0.875rem;
+  }
+  
+  &--lg {
+    padding: 1rem 2rem;
+    font-size: 1.125rem;
+  }
+  
+  // Variante pleine largeur
+  &--block {
+    display: block;
+    width: 100%;
+  }
+}
+
+// Rétrocompatibilité avec les anciennes classes
+.red {
+  @extend .btn--tertiary;
+}
+
+.green {
+  @extend .btn--secondary;
+}
+
+.blue {
+  @extend .btn--info;
+}
+
+.beige {
+  @extend .btn--primary;
+}
+
+.darkblue {
+  @extend .btn--dark;
+}
