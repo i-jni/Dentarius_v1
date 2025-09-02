@@ -1,0 +1,62 @@
+// Couleurs de base
+$white: #ffffff;
+$black: #000000;
+$grey-100: #f9f9f9;
+$grey-200: #f3f1ea;
+$grey-300: #eeece4;
+$grey-400: #cfcecc;
+$grey-500: #a8a8a7;
+$grey-600: #797c7f;
+$grey-700: #575551;
+$grey-800: #191919;
+
+// Couleurs thématiques
+$primary: #ac9f76;    // Beige/Or
+$secondary: #58a59d;  // Vert dentaire
+$tertiary: #b15252;   // Rouge
+$info: #2196f3;       // Bleu
+$dark: #002439;       // Bleu foncé
+
+// Couleurs sémantiques
+$success: #58ad5b;
+$warning: #ffc107;
+$danger: #b15252;
+
+// Couleurs d'arrière-plan
+$body-bg: #fafafa;
+$card-bg: $white;
+
+// Polices
+$font-primary: 'FlameBold', sans-serif;
+$font-secondary: 'RobotoSlab', serif;
+
+// Breakpoints
+$breakpoint-mobile: 576px;
+$breakpoint-tablet: 768px;
+$breakpoint-desktop: 1024px;
+$breakpoint-widescreen: 1200px;
+$breakpoint-widescreen-xl: 1400px;
+
+// Espacement
+$spacing-xs: 0.25rem;  // 4px
+$spacing-sm: 0.5rem;   // 8px
+$spacing-md: 1rem;     // 16px
+$spacing-lg: 1.5rem;   // 24px
+$spacing-xl: 2rem;     // 32px
+$spacing-xxl: 3rem;    // 48px
+
+// Bordures
+$border-radius-sm: 0.25rem;
+$border-radius-md: 0.5rem;
+$border-radius-lg: 1rem;
+$border-width: 1px;
+$border-color: $grey-300;
+
+// Z-index
+$z-index-dropdown: 1000;
+$z-index-sticky: 1020;
+$z-index-fixed: 1030;
+$z-index-modal-backdrop: 1040;
+$z-index-modal: 1050;
+$z-index-popover: 1060;
+$z-index-tooltip: 1070;

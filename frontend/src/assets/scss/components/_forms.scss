@@ -1,0 +1,73 @@
+@import '../abstracts/variables';
+@import '../abstracts/mixins';
+
+.form {
+  &__group {
+    margin-bottom: $spacing-lg;
+  }
+  
+  &__label {
+    display: block;
+    margin-bottom: $spacing-sm;
+    font-family: $font-primary;
+    font-weight: 600;
+    color: $grey-700;
+  }
+  
+  &__input {
+    width: 100%;
+    padding: $spacing-md;
+    border: $border-width solid $border-color;
+    border-radius: $border-radius-sm;
+    background-color: $white;
+    color: $grey-800;
+    @include transition(border-color);
+    
+    &:focus {
+      outline: none;
+      border-color: $primary;
+    }
+    
+    &--error {
+      border-color: $danger;
+    }
+    
+    &::placeholder {
+      color: $grey-500;
+    }
+  }
+  
+  textarea.form__input {
+    min-height: 120px;
+    resize: vertical;
+  }
+  
+  select.form__input {
+    appearance: none;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' viewBox='0 0 24 24' fill='none' stroke='%23575551' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpolyline points='6 9 12 15 18 9'%3E%3C/polyline%3E%3C/svg%3E");
+    background-repeat: no-repeat;
+    background-position: right $spacing-md center;
+    padding-right: $spacing-xl;
+  }
+  
+  &__error {
+    display: block;
+    color: $danger;
+    font-size: 0.875rem;
+    margin-top: $spacing-xs;
+  }
+  
+  &__hint {
+    display: block;
+    color: $grey-600;
+    font-size: 0.875rem;
+    margin-top: $spacing-xs;
+  }
+  
+  &__actions {
+    margin-top: $spacing-xl;
+    display: flex;
+    justify-content: flex-end;
+    gap: $spacing-md;
+  }
+}
