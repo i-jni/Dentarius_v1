@@ -1,14 +1,15 @@
 import { useState, useEffect } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useParams, Link } from 'react-router-dom';
 import { courseService } from '../api/courseService';
 import { levelService } from '../api/levelService';
 import { topicService } from '../api/topicService';
 import { useAuthContext } from '../context/AuthContext';
-import styles from './CreateCoursePage.module.scss';
+import styles from './CreateCoursePage.module.scss'; // Réutilise les mêmes styles
 
-const CreateCoursePage = () => {
+const EditCoursePage = () => {
   const navigate = useNavigate();
-  const { isAuthenticated } = useAuthContext();
+  const { id } = useParams();
+  const { isAuthenticated, user } = useAuthContext();
   
   const [formData, setFormData] = useState({
     title: '',
@@ -20,7 +21,9 @@ const CreateCoursePage = () => {
   const [levels, setLevels] = useState([]);
   const [topics, setTopics] = useState([]);
   const [loading, setLoading] = useState(false);
+  const [loadingData, setLoadingData] = useState(true);
   const [error, setError] = useState('');
+  const [canEdit, setCanEdit] = useState(false);
 
   // Redirection si non authentifié
   useEffect(() => {
@@ -29,25 +32,49 @@ const CreateCoursePage = () => {
     }
   }, [isAuthenticated, navigate]);
 
-  // Charger les niveaux et topics
+  // Charger les données initiales
   useEffect(() => {
     const loadData = async () => {
       try {
-        const [levelsData, topicsData] = await Promise.all([
+        const [courseData, levelsData, topicsData] = await Promise.all([
+          courseService.getCourseById(id),
           levelService.getAllLevels(),
           topicService.getAllTopics()
         ]);
+
         setLevels(levelsData);
         setTopics(topicsData);
+        
+        // Vérifier si l'utilisateur peut éditer ce cours
+        const createdCourses = JSON.parse(localStorage.getItem('userCreatedCourses') || '[]');
+        const userCanEdit = createdCourses.includes(parseInt(id));
+        setCanEdit(userCanEdit);
+        
+        if (!userCanEdit) {
+          setError('Vous n\'avez pas l\'autorisation de modifier ce cours');
+          return;
+        }
+        
+        // Pré-remplir le formulaire avec les données du cours
+        setFormData({
+          title: courseData.title || '',
+          description: courseData.description || '',
+          levelId: courseData.levelId || '',
+          topicIds: courseData.topics ? courseData.topics.map(topic => topic.id) : []
+        });
+        
       } catch (error) {
         setError('Erreur lors du chargement des données');
+        console.error('Erreur:', error);
+      } finally {
+        setLoadingData(false);
       }
     };
     
-    if (isAuthenticated) {
+    if (id && isAuthenticated) {
       loadData();
     }
-  }, [isAuthenticated]);
+  }, [id, isAuthenticated]);
 
   const handleInputChange = (e) => {
     const { name, value } = e.target;
@@ -88,21 +115,16 @@ const CreateCoursePage = () => {
         topicIds: formData.topicIds.map(id => parseInt(id))
       };
 
-      // Créer le cours
-      const newCourse = await courseService.createCourse(courseData);
-      
-      // AJOUTER L'ID DU COURS CRÉÉ À LOCALSTORAGE POUR LE TRACKING
-      const createdCourses = JSON.parse(localStorage.getItem('userCreatedCourses') || '[]');
-      createdCourses.push(newCourse.id);
-      localStorage.setItem('userCreatedCourses', JSON.stringify(createdCourses));
+      // Mettre à jour le cours
+      await courseService.updateCourse(id, courseData);
       
       // Redirection vers la liste des cours
       navigate('/courses', { 
-        state: { message: 'Cours créé avec succès !' }
+        state: { message: 'Cours modifié avec succès !' }
       });
       
     } catch (error) {
-      setError(error.message || 'Erreur lors de la création du cours');
+      setError(error.message || 'Erreur lors de la modification du cours');
     } finally {
       setLoading(false);
     }
@@ -112,10 +134,36 @@ const CreateCoursePage = () => {
     return null;
   }
 
+  if (loadingData) {
+    return (
+      <div className="container">
+        <div className={styles.createCourse}>
+          <div className={styles.loading}>Chargement du cours...</div>
+        </div>
+      </div>
+    );
+  }
+
+  // Vérification des permissions
+  if (!canEdit) {
+    return (
+      <div className="container">
+        <div className={styles.createCourse}>
+          <div className={styles.error}>
+            Vous n'avez pas l'autorisation de modifier ce cours.
+          </div>
+          <Link to="/courses" className="btn btn--primary">
+            Retour à la liste des cours
+          </Link>
+        </div>
+      </div>
+    );
+  }
+
   return (
     <div className="container">
       <div className={styles.createCourse}>
-        <h1>Créer un nouveau cours</h1>
+        <h1>Modifier le cours</h1>
         
         {error && (
           <div className={styles.error}>
@@ -202,7 +250,7 @@ const CreateCoursePage = () => {
               className="btn btn--primary"
               disabled={loading}
             >
-              {loading ? 'Création...' : 'Créer le cours'}
+              {loading ? 'Modification...' : 'Modifier le cours'}
             </button>
           </div>
         </form>
@@ -211,4 +259,4 @@ const CreateCoursePage = () => {
   );
 };
 
-export default CreateCoursePage;
+export default EditCoursePage;

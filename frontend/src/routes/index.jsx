@@ -7,6 +7,7 @@ import RegisterPage from '../pages/RegisterPage';
 import CourseListPage from '../pages/CourseListPage';
 import CourseDetailPage from '../pages/CourseDetailPage';
 import CreateCoursePage from '../pages/CreateCoursePage';
+import EditCoursePage from '../pages/EditCoursePage';
 import StudentListPage from '../pages/StudentListPage';
 import StudentDetailPage from '../pages/StudentDetailPage';
 import NotFoundPage from '../pages/NotFoundPage';
@@ -26,6 +27,7 @@ const AppRoutes = () => {
             <Route path="/courses" element={<CourseListPage />} />
             <Route path="/courses/:id" element={<CourseDetailPage />} />
             <Route path="/create-course" element={<CreateCoursePage />} />
+            <Route path="/edit-course/:id" element={<EditCoursePage />} />
             <Route path="/students" element={<StudentListPage />} />
             <Route path="/students/:id" element={<StudentDetailPage />} />
             <Route path="/mentions-legales" element={<MentionsPage />} />
