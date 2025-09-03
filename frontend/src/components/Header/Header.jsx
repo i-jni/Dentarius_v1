@@ -38,16 +38,28 @@ const Header = () => {
                 </NavLink>
               </li>
               {isAuthenticated && (
-                <li>
-                  <NavLink 
-                    to="/students" 
-                    className={({ isActive }) => 
-                      isActive ? styles.activeLink : styles.navLink
-                    }
-                  >
-                    Étudiants
-                  </NavLink>
-                </li>
+                <>
+                  <li>
+                    <NavLink 
+                      to="/students" 
+                      className={({ isActive }) => 
+                        isActive ? styles.activeLink : styles.navLink
+                      }
+                    >
+                      Étudiants
+                    </NavLink>
+                  </li>
+                  <li>
+                    <NavLink 
+                      to="/create-course" 
+                      className={({ isActive }) => 
+                        isActive ? styles.activeLink : styles.navLink
+                      }
+                    >
+                      Créer un cours
+                    </NavLink>
+                  </li>
+                </>
               )}
             </ul>
           </nav>
