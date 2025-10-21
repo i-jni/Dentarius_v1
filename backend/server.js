@@ -8,6 +8,7 @@ import levelRouter from "./routes/level.js";
 import countryRouter from "./routes/country.js";
 import courseTopicRouter from "./routes/courseTopic.js";
 import { setupSwagger } from "./docs/swagger.js";
+import topicRouter from "./routes/topic.js";
 
 
 const app = express();
@@ -29,6 +30,7 @@ router.use("/course", courseRouter);
 router.use("/level", levelRouter);
 router.use("/country", countryRouter);
 router.use("/course-topic", courseTopicRouter);
+router.use("/topic", topicRouter);
 router.use(errorRouter);
 
 app.use("/api", router);

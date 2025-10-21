@@ -108,3 +108,18 @@
   -o-filter: brightness($filter);
   filter: brightness($filter);
 }
+// Mixin pour les boutons de base
+@mixin button-base {
+  border-radius: $border-radius-md;
+  font-weight: $font-weight-medium;
+  text-align: center;
+  cursor: pointer;
+  transition: all $transition-base;
+  border: 1px solid transparent;
+  font-size: $font-size-sm;
+  
+  &:disabled {
+    opacity: 0.6;
+    cursor: not-allowed;
+  }
+}
