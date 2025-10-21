@@ -7,7 +7,7 @@ import TitleAndImage from '../components/TitleAndImage/TitleAndImage';
 import Accordion from '../components/Accordion/Accordion';
 import Stats from '../components/Stats/Stats';
 import Testimonials from '../components/Testimonials/Testimonials';
-import styles from './HomePage.module.scss';
+// import styles from './HomePage.module.scss';
 
 const HomePage = () => {
   // Données pour les statistiques
@@ -65,8 +65,7 @@ const HomePage = () => {
       <TitleAndImage
         title="Bienvenue sur Dentarius"
         subtitle="La plateforme d'apprentissage pour les étudiants en dentaire"
-        backgroundImage="https://images.unsplash.com/photo-1606811971618-4486d14f3f99?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1470&q=80"
-        ctaText="Découvrir nos cours"
+        backgroundImage="https://images.unsplash.com/photo-1576091160550-2173dba999ef?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1470&q=80"
         ctaLink="/courses"
         height="large"
       />

@@ -1,5 +1,5 @@
-// src/hooks/useAuth.js
-import { useState, useEffect, useCallback } from 'react';
+
+import { useState, useEffect } from 'react';
 import { authService } from '../api/authService';
 
 export const useAuth = () => {
@@ -16,7 +16,7 @@ export const useAuth = () => {
   }, []);
   
   // Fonction de connexion
-  const login = useCallback(async (credentials) => {
+  const login = async (credentials) => {
     try {
       const data = await authService.login(credentials);
       const { user, token } = data;
@@ -33,10 +33,10 @@ export const useAuth = () => {
         error: error.message || 'Une erreur est survenue lors de la connexion'
       };
     }
-  }, []);
+  };
   
   // Fonction d'inscription
-  const register = useCallback(async (userData) => {
+  const register = async (userData) => {
     try {
       const data = await authService.register(userData);
       const { user, token } = data;
@@ -53,13 +53,13 @@ export const useAuth = () => {
         error: error.message || 'Une erreur est survenue lors de l\'inscription'
       };
     }
-  }, []);
+  };
   
   // Fonction de déconnexion
-  const logout = useCallback(() => {
+  const logout = () => {
     authService.logout();
     setUser(null);
-  }, []);
+  };
   
   return {
     user,
