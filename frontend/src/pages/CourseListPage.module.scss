@@ -1,3 +1,6 @@
+@import '../assets/scss/abstracts/variables';
+@import '../assets/scss/abstracts/mixins';
+
 .courseList {
   padding: 2rem 0;
 }
@@ -262,4 +265,56 @@
     flex-direction: column;
     align-items: flex-start;
   }
+
+  .searchResults {
+  background: lighten($info, 45%);
+  color: darken($info, 20%);
+  padding: $spacing-sm $spacing-md;
+  border-radius: $border-radius-md;
+  margin-bottom: $spacing-lg;
+  font-size: 18px;
+  border-left: 4px solid $info;
+
+  p {
+    margin: 0;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: $spacing-md;
+  }
+
+  em {
+    font-style: normal;
+    font-weight: 600;
+    color: darken($info, 30%);
+  }
+}
+
+.clearSearchLink {
+  background: none;
+  border: none;
+  color: $primary;
+  cursor: pointer;
+  text-decoration: underline;
+  font-size: 18px;
+  padding: $spacing-xs;
+  border-radius: $border-radius-sm;
+
+  &:hover {
+    background: rgba($primary, 0.1);
+  }
+
+  &:focus {
+    outline: 2px solid $primary;
+    outline-offset: 2px;
+  }
+}
+
+@include responsive(mobile) {
+  .searchResults p {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: $spacing-xs;
+  }
+}
 }

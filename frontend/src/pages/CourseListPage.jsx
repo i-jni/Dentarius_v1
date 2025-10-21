@@ -3,6 +3,8 @@ import { Link, useLocation, useNavigate } from 'react-router-dom';
 import { courseService } from '../api/courseService';
 import { useAuthContext } from '../context/AuthContext';
 import CourseImage from '../components/CourseImage/CourseImage';
+import SimpleSearch from '../components/SimpleSearch/SimpleSearch';
+import useSimpleSearch from '../hooks/useSimpleSearch';
 import styles from './CourseListPage.module.scss';
 
 const CourseListPage = () => {
@@ -15,6 +17,16 @@ const CourseListPage = () => {
   const [message, setMessage] = useState('');
   const [deletingId, setDeletingId] = useState(null);
   const [userCourses, setUserCourses] = useState(new Set()); // Stocker les IDs des cours de l'utilisateur
+
+  // Hook de recherche simple
+  const {
+    searchTerm,
+    searchResults,
+    handleSearch,
+    clearSearch,
+    hasSearch,
+    resultCount
+  } = useSimpleSearch(courses, ['title', 'description']);
 
   // Afficher le message de succès s'il y en a un
   useEffect(() => {
@@ -102,7 +114,32 @@ const CourseListPage = () => {
   return (
     <div className="container">
       <div className={styles.courseList}>
+        {/* Recherche simple */}
+          <SimpleSearch
+          onSearch={handleSearch}
+          placeholder="Rechercher des cours par titre ou contenu..."
+          initialValue={searchTerm}
+        />
+        {/* Indicateur de résultats de recherche */}
+        {hasSearch && (
+          <div className={styles.searchResults}>
+            <p>
+              <span>
+                <strong>{resultCount}</strong> cours trouvé{resultCount > 1 ? 's' : ''} 
+                pour "<em>{searchTerm}</em>"
+              </span>
+              <button 
+                onClick={clearSearch}
+                className={styles.clearSearchLink}
+                aria-label="Effacer la recherche"
+              >
+                Effacer
+              </button>
+            </p>
+          </div>
+        )}
         <div className={styles.header}>
+          
           <h1>Liste des cours</h1>
           {isAuthenticated && (
             <Link to="/create-course" className="btn btn--primary">
@@ -122,92 +159,108 @@ const CourseListPage = () => {
             {error}
           </div>
         )}
+   
 
-        {courses.length === 0 ? (
+        {/* Affichage conditionnel selon les résultats */}
+        {searchResults.length === 0 ? (
           <div className={styles.empty}>
-            <p>Aucun cours disponible pour le moment.</p>
-            {isAuthenticated && (
-              <Link to="/create-course" className="btn btn--primary">
-                Créer le premier cours
-              </Link>
-            )}
+            {hasSearch ? (
+              <>
+                <p>Aucun cours ne correspond à votre recherche "<strong>{searchTerm}</strong>".</p>
+                <button 
+                  onClick={clearSearch}
+                  className="btn btn--outline"
+                >
+                  Voir tous les cours
+                </button>
+              </>
+            ) : courses.length === 0 ? (
+              <>
+                <p>Aucun cours disponible pour le moment.</p>
+                {isAuthenticated && (
+                  <Link to="/create-course" className="btn btn--primary">
+                    Créer le premier cours
+                  </Link>
+                )}
+              </>
+            ) : null}
           </div>
         ) : (
-         <div className={styles.coursesGrid}>  
-  {courses.map(course => (  
-    <div key={course.id} className={styles.courseCard}>  
-      {/* Image du cours */}  
-      <div className={styles.courseImageContainer}>  
-        <CourseImage   
-          title={course.title}  
-          size="card"  
-        />  
-      </div>  
-        
-      <div className={styles.courseContent}>  
-        <h3>{course.title}</h3>  
-        <p className={styles.description}>  
-          {course.description || 'Aucune description disponible'}  
-        </p>  
-  
-        <div className={styles.meta}>  
-          <span className={styles.level}>  
-            Niveau: {course.level?.name || 'Non défini'}  
-          </span>  
-          <span className={styles.date}>  
-            {new Date(course.createdAt).toLocaleDateString('fr-FR')}  
-          </span>  
-          {canEditCourse(course) && (  
-            <span className={styles.owner}>Votre cours</span>  
-          )}  
-        </div>  
-          
-        {/* Topics sous forme de badges texte */}  
-        {course.topics && course.topics.length > 0 && (  
-          <div className={styles.topicsBadges}>  
-            {course.topics.slice(0, 3).map(topic => (  
-              <span key={topic.id} className={styles.topicBadge}>  
-                {topic.name}  
-              </span>  
-            ))}  
-            {course.topics.length > 3 && (  
-              <span className={styles.moreBadge}>  
-                +{course.topics.length - 3}  
-              </span>  
-            )}  
-          </div>  
-        )}  
-          
-        <div className={styles.actions}>  
-          <Link   
-            to={`/courses/${course.id}`}   
-            className="btn btn--outline"  
-          >  
-            Voir le cours  
-          </Link>  
+          <div className={styles.coursesGrid}>  
+            {searchResults.map(course => (  
+              <div key={course.id} className={styles.courseCard}>  
+                {/* Image du cours */}  
+                <div className={styles.courseImageContainer}>  
+                  <CourseImage   
+                    title={course.title}  
+                    size="card"  
+                  />  
+                </div>  
+                  
+                <div className={styles.courseContent}>  
+                  <h3>{course.title}</h3>  
+                  <p className={styles.description}>  
+                    {course.description || 'Aucune description disponible'}  
+                  </p>  
             
-          {canEditCourse(course) && (  
-            <div className={styles.adminActions}>  
-              <Link   
-                to={`/edit-course/${course.id}`}   
-                className="btn btn--secondary"  
-              >  
-                Éditer  
-              </Link>  
-              <button   
-                onClick={() => handleDelete(course.id, course.title)}  
-                className="btn btn--danger"  
-                disabled={deletingId === course.id}  
-              >  
-                {deletingId === course.id ? 'Suppression...' : 'Supprimer'}  
-              </button>  
-            </div>  
-          )}  
-        </div>  
-      </div>  
-    </div>  
-  ))}  
-</div>
+                  <div className={styles.meta}>  
+                    <span className={styles.level}>  
+                      Niveau: {course.level?.name || 'Non défini'}  
+                    </span>  
+                    <span className={styles.date}>  
+                      {new Date(course.createdAt).toLocaleDateString('fr-FR')}  
+                    </span>  
+                    {canEditCourse(course) && (  
+                      <span className={styles.owner}>Votre cours</span>  
+                    )}  
+                  </div>  
+                    
+                  {/* Topics sous forme de badges texte */}  
+                  {course.topics && course.topics.length > 0 && (  
+                    <div className={styles.topicsBadges}>  
+                      {course.topics.slice(0, 3).map(topic => (  
+                        <span key={topic.id} className={styles.topicBadge}>  
+                          {topic.name}  
+                        </span>  
+                      ))}  
+                      {course.topics.length > 3 && (  
+                        <span className={styles.moreBadge}>  
+                          +{course.topics.length - 3}  
+                        </span>  
+                      )}  
+                    </div>  
+                  )}  
+                    
+                  <div className={styles.actions}>  
+                    <Link   
+                      to={`/courses/${course.id}`}   
+                      className="btn btn--outline"  
+                    >  
+                      Voir le cours  
+                    </Link>  
+                      
+                    {canEditCourse(course) && (  
+                      <div className={styles.adminActions}>  
+                        <Link   
+                          to={`/edit-course/${course.id}`}   
+                          className="btn btn--secondary"  
+                        >  
+                          Éditer  
+                        </Link>  
+                        <button   
+                          onClick={() => handleDelete(course.id, course.title)}  
+                          className="btn btn--danger"  
+                          disabled={deletingId === course.id}  
+                        >  
+                          {deletingId === course.id ? 'Suppression...' : 'Supprimer'}  
+                        </button>  
+                      </div>  
+                    )}  
+                  </div>  
+                </div>  
+              </div>  
+            ))}  
+          </div>
         )}
       </div>
     </div>
