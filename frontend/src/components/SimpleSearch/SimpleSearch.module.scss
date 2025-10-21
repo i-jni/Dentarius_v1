@@ -1,0 +1,205 @@
+@import '../../assets/scss/abstracts/variables';
+@import '../../assets/scss/abstracts/mixins';
+
+.simpleSearch {
+  margin-bottom: $spacing-lg;
+}
+
+.searchContainer {
+  position: relative;
+  display: flex;
+  align-items: center;
+  max-width: 800px;
+  margin: 0 auto;
+}
+
+.searchIcon {
+  position: absolute;
+  left: $spacing-md;
+  color: $grey-500;
+  z-index: 1;
+  pointer-events: none;
+}
+
+.searchInput {
+  width: 100%;
+  padding: $spacing-sm $spacing-md $spacing-sm ($spacing-md * 3);
+  border: 2px solid $dark;
+  border-radius: $border-radius-lg;
+  font-size: 22px;
+  background: $white;
+//   transition: all $transition-base;
+  
+  // États de focus
+  &:focus {
+    outline: none;
+    border-color: $primary;
+    box-shadow: 0 0 0 3px rgba($primary, 0.1);
+  }
+
+  // Placeholder
+  &::placeholder {
+    color: $grey-500;
+  }
+
+  // Style pour type="search"
+  &::-webkit-search-cancel-button {
+    display: none;
+  }
+
+  // Responsive
+  @include responsive(mobile) {
+    font-size: 18px;
+    padding: $spacing-sm $spacing-md $spacing-sm ($spacing-md * 2.5);
+  }
+}
+
+.clearButton {
+  position: absolute;
+  right: $spacing-md;
+  background: none;
+  border: none;
+  color: $grey-500;
+  cursor: pointer;
+  padding: $spacing-xs;
+  border-radius: $border-radius-sm;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+//   transition: all $transition-base;
+  z-index: 2;
+
+  &:hover {
+    background: $grey-100;
+    color: $grey-700;
+  }
+
+  &:focus {
+    outline: 2px solid $primary;
+    outline-offset: 2px;
+  }
+
+  // Animation d'apparition
+  animation: fadeIn 0.2s ease;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: scale(0.8);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+.searchingIndicator {
+  position: absolute;
+  right: $spacing-lg * 2;
+  display: flex;
+  align-items: center;
+  z-index: 1;
+}
+
+.spinner {
+  width: 16px;
+  height: 16px;
+  border: 2px solid $grey-200;
+  border-top: 2px solid $primary;
+  border-radius: 50%;
+  animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+
+// Classe d'accessibilité pour cacher visuellement mais garder pour lecteurs d'écran
+.visuallyHidden {
+  position: absolute !important;
+  width: 1px !important;
+  height: 1px !important;
+  padding: 0 !important;
+  margin: -1px !important;
+  overflow: hidden !important;
+  clip: rect(0, 0, 0, 0) !important;
+  white-space: nowrap !important;
+  border: 0 !important;
+}
+
+// États d'erreur ou de succès
+.searchContainer {
+  &.hasResults {
+    .searchInput {
+      border-color: $success;
+    }
+  }
+
+  &.noResults {
+    .searchInput {
+      border-color: $warning;
+    }
+  }
+}
+
+// // Mode sombre (si nécessaire)
+// @media (prefers-color-scheme: dark) {
+//   .searchInput {
+//     background: $grey-800;
+//     border-color: $grey-600;
+//     color: $white;
+
+//     &::placeholder {
+//       color: $grey-400;
+//     }
+
+//     &:focus {
+//       border-color: $primary;
+//     }
+//   }
+
+//   .searchIcon,
+//   .clearButton {
+//     color: $grey-400;
+//   }
+
+//   .clearButton:hover {
+//     background: $grey-700;
+//     color: $grey-200;
+//   }
+// }
+
+// Amélioration du contraste pour l'accessibilité
+@media (prefers-contrast: high) {
+  .searchInput {
+    border-width: 3px;
+  }
+
+  .searchIcon,
+  .clearButton {
+    color: $grey-700;
+  }
+}
+
+// Réduction des animations pour les utilisateurs sensibles
+@media (prefers-reduced-motion: reduce) {
+  .searchInput,
+  .clearButton,
+  .spinner {
+    transition: none;
+    animation: none;
+  }
+
+  .clearButton {
+    animation: none;
+  }
+}
+
+// Print styles
+@media print {
+  .simpleSearch {
+    display: none;
+  }
+}
