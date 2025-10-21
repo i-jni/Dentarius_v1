@@ -2,6 +2,7 @@ import { useState } from 'react';
 import { Link, NavLink } from 'react-router-dom';
 import { useAuthContext } from '../../context/AuthContext';
 import styles from './Header.module.scss';
+import Avatar from '../Avatar/Avatar';
 
 const Header = () => {
   const { isAuthenticated, user, logout } = useAuthContext();
@@ -82,19 +83,30 @@ const Header = () => {
           
           {/* Actions Auth Desktop */}
           <div className={styles.authActions}>
-            {isAuthenticated ? (
-              <>
-                <span className={styles.userName}>
-                  {user?.firstName || 'Utilisateur'}
-                </span>
-                <button 
-                  className={`btn btn--outline ${styles.authButton}`}
-                  onClick={logout}
-                >
-                  Déconnexion
-                </button>
-              </>
-            ) : (
+        {isAuthenticated ? (  
+    <>  
+      <Link 
+        to="/profile"   
+        className={styles.userNameLink}  
+        title="Voir mon profil"  
+      >  
+        <Avatar  
+          firstName={user?.firstName}  
+          lastName={user?.lastName}  
+          size="small"  
+        />  
+        <span className={styles.userName}>  
+          {user?.firstName || 'Utilisateur'}  
+        </span>  
+      </Link>  
+      <button   
+        className={`btn btn--outline ${styles.authButton}`}  
+        onClick={logout}  
+      >  
+        Déconnexion  
+      </button>  
+    </>  
+  ) : (
               <>
                 <Link 
                   to="/login" 

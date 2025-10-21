@@ -13,6 +13,7 @@ import StudentDetailPage from '../pages/StudentDetailPage';
 import NotFoundPage from '../pages/NotFoundPage';
 import MentionsPage from '../pages/MentionsPage';
 import ConfidentialitePage from '../pages/ConfidentialitePage';
+import ProfilePage from '../pages/ProfilePage';
 
 const AppRoutes = () => {
   return (
@@ -32,6 +33,7 @@ const AppRoutes = () => {
             <Route path="/students/:id" element={<StudentDetailPage />} />
             <Route path="/mentions-legales" element={<MentionsPage />} />
             <Route path="/confidentialite" element={<ConfidentialitePage />} />
+            <Route path="/profile" element={<ProfilePage />} />
             <Route path="*" element={<NotFoundPage />} />
           </Routes>
         </main>

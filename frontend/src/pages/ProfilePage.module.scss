@@ -1,0 +1,242 @@
+@import '../assets/scss/abstracts/variables';
+@import '../assets/scss/abstracts/mixins';
+
+.profilePage {
+  max-width: 900px;
+  margin: 0 auto;
+  padding: $spacing-xl 0;
+}
+
+.loading {
+  text-align: center;
+  padding: $spacing-xl;
+  font-size:20px;
+  color: $grey-600;
+}
+
+.error {
+  background: lighten($danger, 45%);
+  color: darken($danger, 20%);
+  padding: $spacing-md;
+  border-radius: $border-radius-md;
+  margin-bottom: $spacing-lg;
+  border-left: 4px solid $danger;
+  text-align: center;
+}
+
+.success {
+  background: lighten($success, 45%);
+  color: darken($success, 20%);
+  padding: $spacing-md;
+  border-radius: $border-radius-md;
+  margin-bottom: $spacing-lg;
+  border-left: 4px solid $success;
+  text-align: center;
+}
+
+// En-tête
+.profileHeader {
+  background: $white;
+  border-radius: $border-radius-lg;
+  padding: $spacing-xl;
+  margin-bottom: $spacing-xl;
+//   box-shadow: $shadow-sm;
+  border: 1px solid $grey-200;
+
+  @include responsive(mobile) {
+    padding: $spacing-lg;
+  }
+}
+
+.avatarSection {
+  display: flex;
+  align-items: center;
+  gap: $spacing-xl;
+  margin-bottom: $spacing-lg;
+
+  @include responsive(mobile) {
+    flex-direction: column;
+    text-align: center;
+    gap: $spacing-lg;
+  }
+}
+
+.userInfo {
+  flex: 1;
+
+  h1 {
+    margin: 0 0 $spacing-xs 0;
+    color: $grey-900;
+    font-size:26px * 1.5;
+    font-weight: 700;
+  }
+
+  .email {
+    color: $grey-600;
+    font-size:20px;
+    margin: 0 0 $spacing-xs 0;
+  }
+
+  .country {
+    color: $primary;
+    font-size:18px;
+    margin: 0 0 $spacing-xs 0;
+    font-weight:500;
+  }
+
+  .joinDate {
+    color: $grey-500;
+    font-size:20px;
+    margin: 0;
+  }
+}
+
+.actions {
+  display: flex;
+  gap: $spacing-md;
+  flex-wrap: wrap;
+
+  @include responsive(mobile) {
+    justify-content: center;
+  }
+}
+
+// Contenu
+.profileContent {
+  display: flex;
+  flex-direction: column;
+  gap: $spacing-xl;
+}
+
+.section {
+  background: $white;
+  border-radius: $border-radius-lg;
+  padding: $spacing-xl;
+//   box-shadow: $shadow-sm;
+  border: 1px solid $grey-200;
+
+  h2 {
+    margin: 0 0 $spacing-lg 0;
+    color: $grey-900;
+    font-size:26px;
+    font-weight:600;
+  }
+
+  @include responsive(mobile) {
+    padding: $spacing-lg;
+  }
+}
+
+// Affichage infos
+.infoDisplay {
+  display: grid;
+  gap: $spacing-lg;
+}
+
+.infoItem {
+  display: grid;
+  grid-template-columns: 150px 1fr;
+  gap: $spacing-md;
+  align-items: start;
+
+  label {
+    font-weight:600;
+    color: $grey-700;
+  }
+
+  span {
+    color: $grey-900;
+  }
+
+  @include responsive(mobile) {
+    grid-template-columns: 1fr;
+    gap: $spacing-xs;
+  }
+}
+
+// Formulaire
+.editForm {
+  display: grid;
+  gap: $spacing-lg;
+}
+
+.formGroup {
+  display: flex;
+  flex-direction: column;
+  gap: $spacing-xs;
+
+  label {
+    font-weight:600;
+    color: $grey-700;
+  }
+}
+
+.formInput,
+.formSelect {
+  padding: $spacing-sm $spacing-md;
+  border: 2px solid $grey-200;
+  border-radius: $border-radius-md;
+  font-size:18px;
+  transition: border-color ease, box-shadow ease;
+
+  &:focus {
+    outline: none;
+    border-color: $primary;
+    box-shadow: 0 0 0 3px rgba($primary, 0.1);
+  }
+}
+
+// Actions rapides
+.quickActions {
+  display: flex;
+  gap: $spacing-md;
+  flex-wrap: wrap;
+
+  @include responsive(mobile) {
+    flex-direction: column;
+  }
+}
+
+// Zone danger
+.dangerTitle {
+  color: $danger !important;
+}
+
+.dangerZone {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: $spacing-lg;
+  background: lighten($danger, 48%);
+  border: 1px solid lighten($danger, 40%);
+  border-radius: $border-radius-md;
+  gap: $spacing-lg;
+
+  @include responsive(mobile) {
+    flex-direction: column;
+    text-align: center;
+  }
+}
+
+.dangerInfo {
+  flex: 1;
+
+  h3 {
+    margin: 0 0 $spacing-xs 0;
+    color: $danger;
+    font-size:20px;
+  }
+
+  p {
+    margin: 0;
+    color: darken($danger, 10%);
+    font-size:20px;
+  }
+}
+
+// Responsive
+@include responsive(mobile) {
+  .profilePage {
+    padding: $spacing-md 0;
+  }
+}
