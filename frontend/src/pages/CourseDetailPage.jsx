@@ -11,6 +11,7 @@ const CourseDetailPage = () => {
   const { isAuthenticated, user } = useAuthContext();
   
   const [course, setCourse] = useState(null);
+  const [views, setViews] = useState(0); // ← AJOUTER
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState('');
   const [deleting, setDeleting] = useState(false);
@@ -31,8 +32,37 @@ const CourseDetailPage = () => {
 
     if (id) {
       loadCourse();
+      loadAndIncrementViews(); // ← AJOUTER
     }
   }, [id]);
+
+  // ← NOUVELLE FONCTION : Gérer les vues en localStorage
+  const loadAndIncrementViews = () => {
+    // Récupérer les vues depuis localStorage
+    const allViews = JSON.parse(localStorage.getItem('courseViews') || '{}');
+    const currentViews = allViews[id] || 0;
+    
+    // Vérifier si déjà vu aujourd'hui
+    const viewedToday = JSON.parse(localStorage.getItem('viewedToday') || '[]');
+    const today = new Date().toDateString();
+    const viewKey = `${id}-${today}`;
+    
+    if (!viewedToday.includes(viewKey)) {
+      // Pas encore vu aujourd'hui, incrémenter
+      const newViews = currentViews + 1;
+      allViews[id] = newViews;
+      
+      // Sauvegarder
+      localStorage.setItem('courseViews', JSON.stringify(allViews));
+      viewedToday.push(viewKey);
+      localStorage.setItem('viewedToday', JSON.stringify(viewedToday));
+      
+      setViews(newViews);
+      console.log(`Vue ajoutée pour le cours ${id}. Total: ${newViews}`);
+    } else {
+      setViews(currentViews);
+    }
+  };
 
   // Vérifier si l'utilisateur peut modifier/supprimer ce cours
   const canEditCourse = () => {
@@ -141,67 +171,71 @@ const CourseDetailPage = () => {
         </nav>
 
         {/* Header du cours */}
-       <header className={styles.courseHeader}>  
-  {/* AJOUTER l'image hero */}  
-  <div className={styles.courseHero}>  
-    <CourseImage   
-      title={course.title}  
-      size="hero"  
-      showOverlay={true}  
-    />  
-  </div>  
-  
-  <div className={styles.courseHeaderContent}>  
-    <div className={styles.courseInfo}>  
-      <h1>{course.title}</h1>  
-        
-      <div className={styles.courseMeta}>  
-        <span className={styles.level}>  
-          Niveau: {course.level?.name || 'Non défini'}  
-        </span>  
-        <span className={styles.date}>  
-          Créé le {new Date(course.createdAt).toLocaleDateString('fr-FR')}  
-        </span>  
-        {canEditCourse() && (  
-          <span className={styles.owner}>Votre cours</span>  
-        )}  
-      </div>  
-  
-      {/* Topics sous forme de badges */}  
-      {course.topics && course.topics.length > 0 && (  
-        <div className={styles.topics}>  
-          <h3>Sujets :</h3>  
-          <div className={styles.topicsList}>  
-            {course.topics.map(topic => (  
-              <span key={topic.id} className={styles.topic}>  
-                {topic.name}  
-              </span>  
-            ))}  
+        <header className={styles.courseHeader}>  
+          {/* AJOUTER l'image hero */}  
+          <div className={styles.courseHero}>  
+            <CourseImage   
+              title={course.title}  
+              size="hero"  
+              showOverlay={true}  
+            />  
           </div>  
-        </div>  
-      )}  
-    </div>  
-  
-    {/* Actions du propriétaire */}  
-    {canEditCourse() && (  
-      <div className={styles.ownerActions}>  
-        <Link   
-          to={`/edit-course/${course.id}`}   
-          className="btn btn--secondary"  
-        >  
-          Éditer le cours  
-        </Link>  
-        <button   
-          onClick={handleDelete}  
-          className="btn btn--danger"  
-          disabled={deleting}  
-        >  
-          {deleting ? 'Suppression...' : 'Supprimer'}  
-        </button>  
-      </div>  
-    )}  
-  </div>  
-</header>
+          
+          <div className={styles.courseHeaderContent}>  
+            <div className={styles.courseInfo}>  
+              <h1>{course.title}</h1>  
+                
+              <div className={styles.courseMeta}>  
+                <span className={styles.level}>  
+                  Niveau: {course.level?.name || 'Non défini'}  
+                </span>  
+                <span className={styles.date}>  
+                  Créé le {new Date(course.createdAt).toLocaleDateString('fr-FR')}  
+                </span>
+                {/* ← AJOUTER LES VUES */}
+                <span className={styles.views}>
+                  👁️ {views} vue{views > 1 ? 's' : ''}
+                </span>
+                {canEditCourse() && (  
+                  <span className={styles.owner}>Votre cours</span>  
+                )}  
+              </div>  
+          
+              {/* Topics sous forme de badges */}  
+              {course.topics && course.topics.length > 0 && (  
+                <div className={styles.topics}>  
+                  <h3>Sujets :</h3>  
+                  <div className={styles.topicsList}>  
+                    {course.topics.map(topic => (  
+                      <span key={topic.id} className={styles.topic}>  
+                        {topic.name}  
+                      </span>  
+                    ))}  
+                  </div>  
+                </div>  
+              )}  
+            </div>  
+          
+            {/* Actions du propriétaire */}  
+            {canEditCourse() && (  
+              <div className={styles.ownerActions}>  
+                <Link   
+                  to={`/edit-course/${course.id}`}   
+                  className="btn btn--secondary"  
+                >  
+                  Éditer le cours  
+                </Link>  
+                <button   
+                  onClick={handleDelete}  
+                  className="btn btn--danger"  
+                  disabled={deleting}  
+                >  
+                  {deleting ? 'Suppression...' : 'Supprimer'}  
+                </button>  
+              </div>  
+            )}  
+          </div>  
+        </header>
 
         {/* Contenu du cours */}
         <main className={styles.courseContent}>
@@ -291,7 +325,7 @@ const CourseDetailPage = () => {
               Créer un cours
             </Link>
           )}
-        </footer>
+          </footer>
       </div>
     </div>
   );
