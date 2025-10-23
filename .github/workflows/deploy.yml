@@ -23,9 +23,10 @@ jobs:
           # Navigate to project
           cd /var/www/Dentarius_v1
           
-          # Pull latest changes
-          echo "📥 Pulling latest code..."
-          git pull origin main
+          # Force reset to match GitHub
+          echo "🔄 Resetting to latest GitHub version..."
+          git fetch origin
+          git reset --hard origin/main
           
           # Backend deployment
           echo "🔧 Updating backend..."
@@ -38,18 +39,21 @@ jobs:
           echo "🎨 Building frontend..."
           cd ../frontend
           
-          # Force clean install
-          echo "🧹 Cleaning node_modules..."
+          echo "📋 Checking package.json content..."
+          grep -A 5 -B 5 "vite" package.json || echo "Vite not found in package.json"
+          
+          # Clean install
+          echo "🧹 Cleaning..."
           rm -rf node_modules package-lock.json
           
-          echo "📦 Installing all dependencies..."
+          echo "📦 Installing..."
           npm install
           
-          echo "🔍 Checking Vite installation..."
-          ls -la node_modules/.bin/vite || echo "Vite not found in .bin"
+          echo "🔍 Verifying Vite..."
+          npm list vite
           
-          echo "🏗️ Building with npx vite..."
-          VITE_API_URL=https://dentarius.org/api npx vite build
+          echo "🏗️ Building..."
+          VITE_API_URL=https://dentarius.org/api npm run build
           
           # Restart services
           echo "♻️ Restarting services..."
