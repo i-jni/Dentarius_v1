@@ -9,9 +9,9 @@
     "start": "node index.js",
     "prisma": "prisma",
     "seed": "node prisma/seed/index.js",
-    "test:unit": "node --experimental-vm-modules node_modules/jest/bin/jest.js __tests__/unit/",  
-    "test:integration": "node --experimental-vm-modules node_modules/jest/bin/jest.js __tests__/integration/",  
-    "test:security": "node --experimental-vm-modules node_modules/jest/bin/jest.js __tests__/security/",  
+    "test:unit": "node --experimental-vm-modules node_modules/jest/bin/jest.js __tests__/unit/",
+    "test:integration": "node --experimental-vm-modules node_modules/jest/bin/jest.js __tests__/integration/",
+    "test:security": "node --experimental-vm-modules node_modules/jest/bin/jest.js __tests__/security/",
     "test:coverage": "node --experimental-vm-modules node_modules/jest/bin/jest.js --coverage"
   },
   "keywords": [],
@@ -19,7 +19,7 @@
   "license": "ISC",
   "description": "",
   "dependencies": {
-    "@prisma/client": "^6.11.0",
+    "@prisma/client": "^6.18.0",
     "bcryptjs": "^3.0.2",
     "cors": "^2.8.5",
     "dotenv": "^17.0.1",
@@ -34,7 +34,7 @@
     "babel-jest": "^30.1.2",
     "cross-env": "^10.0.0",
     "jest": "^30.1.2",
-    "prisma": "^6.11.0",
+    "prisma": "^6.18.0",
     "supertest": "^7.1.4"
   }
 }

@@ -1,3 +1,4 @@
+
 import { defineConfig } from 'vite'
 import react from '@vitejs/plugin-react'
 
@@ -8,7 +9,9 @@ export default defineConfig({
     port: 3000,
     proxy: {
       '/api': {
-        target: 'http://backend:3001',
+        target: process.env.NODE_ENV === 'production' 
+          ? 'https://dentarius.org' 
+          : 'http://backend:3001',
         changeOrigin: true,
       }
     }
@@ -23,5 +26,5 @@ export default defineConfig({
     alias: {
       '@': '/src',
     },
-  },
+  }
 })

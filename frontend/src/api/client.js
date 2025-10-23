@@ -1,5 +1,5 @@
 // src/api/client.js
-const API_BASE_URL = 'http://localhost:3001/api';
+const API_BASE_URL = import.meta.env.VITE_API_URL || 'http://localhost:3001/api';
 
 // Fonction utilitaire pour les requêtes fetch
 const fetchClient = async (endpoint, options = {}) => {
