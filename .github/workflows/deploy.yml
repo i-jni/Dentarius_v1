@@ -31,13 +31,13 @@ jobs:
           echo "🔧 Updating backend..."
           cd backend
           export $(cat .env.production | xargs)
-          npm install --production
+          npm install --omit=dev
           pm2 restart dentarius-backend
           
           # Frontend deployment
           echo "🎨 Building frontend..."
           cd ../frontend
-          npm install --production
+          npm install
           VITE_API_URL=https://dentarius.org/api npm run build
           
           # Restart services
