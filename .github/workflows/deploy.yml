@@ -39,20 +39,18 @@ jobs:
           echo "🎨 Building frontend..."
           cd ../frontend
           
-          echo "📋 Checking package.json content..."
-          grep -A 5 -B 5 "vite" package.json || echo "Vite not found in package.json"
-          
           # Clean install
           echo "🧹 Cleaning..."
           rm -rf node_modules package-lock.json
           
-          echo "📦 Installing..."
-          npm install
+          echo "📦 Installing ALL dependencies (including dev)..."
+          NODE_ENV=development npm install
           
-          echo "🔍 Verifying Vite..."
+          echo "🔍 Verifying Vite installation..."
           npm list vite
+          ls -la node_modules/.bin/vite
           
-          echo "🏗️ Building..."
+          echo "🏗️ Building with Vite..."
           VITE_API_URL=https://dentarius.org/api npm run build
           
           # Restart services
