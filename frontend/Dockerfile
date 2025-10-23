@@ -1,26 +1,26 @@
-FROM node:18.16-alpine AS build
+FROM node:18-alpine AS build
 
 WORKDIR /app
 
+# Copier package.json et package-lock.json
 COPY package*.json ./
 
+# Installer toutes les dépendances (y compris dev pour Vite)
 RUN npm install
 
+# Copier le code source
 COPY . .
 
-# Afficher le contenu du répertoire pour déboguer
-RUN ls -la
+# Build de production
+RUN npm run build
 
-# Exécuter la commande build avec plus de détails
-RUN npm run build --verbose
-
-# Étape de production avec Nginx
+# Étape production avec Nginx
 FROM nginx:alpine
 
-# Copier les fichiers de build
+# Copier les fichiers buildés
 COPY --from=build /app/dist /usr/share/nginx/html
 
-# Copier la configuration Nginx
+# Copier la config Nginx
 COPY nginx.conf /etc/nginx/conf.d/default.conf
 
 EXPOSE 80
