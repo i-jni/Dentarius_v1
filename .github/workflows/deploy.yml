@@ -38,15 +38,18 @@ jobs:
           echo "🎨 Building frontend..."
           cd ../frontend
           
-          # Force clean install to ensure devDependencies
+          # Force clean install
           echo "🧹 Cleaning node_modules..."
           rm -rf node_modules package-lock.json
           
           echo "📦 Installing all dependencies..."
           npm install
           
-          echo "🏗️ Building with Vite..."
-          VITE_API_URL=https://dentarius.org/api npm run build
+          echo "🔍 Checking Vite installation..."
+          ls -la node_modules/.bin/vite || echo "Vite not found in .bin"
+          
+          echo "🏗️ Building with npx vite..."
+          VITE_API_URL=https://dentarius.org/api npx vite build
           
           # Restart services
           echo "♻️ Restarting services..."

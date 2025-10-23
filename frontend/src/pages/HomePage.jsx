@@ -14,7 +14,7 @@ const HomePage = () => {
   const statsData = [
     { value: '1000+', label: 'Étudiants' },
     { value: '50+', label: 'Cours' },
-    { value: '20+', label: 'Professeurs' },
+    { value: '20+', label: 'Lorem' },
     { value: '95%', label: 'Satisfaction' }
   ];
   
