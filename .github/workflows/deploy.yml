@@ -37,7 +37,15 @@ jobs:
           # Frontend deployment
           echo "🎨 Building frontend..."
           cd ../frontend
+          
+          # Force clean install to ensure devDependencies
+          echo "🧹 Cleaning node_modules..."
+          rm -rf node_modules package-lock.json
+          
+          echo "📦 Installing all dependencies..."
           npm install
+          
+          echo "🏗️ Building with Vite..."
           VITE_API_URL=https://dentarius.org/api npm run build
           
           # Restart services
