@@ -11,7 +11,7 @@ const CourseDetailPage = () => {
   const { isAuthenticated, user } = useAuthContext();
   
   const [course, setCourse] = useState(null);
-  const [views, setViews] = useState(0); // ← AJOUTER
+  const [views, setViews] = useState(0);  
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState('');
   const [deleting, setDeleting] = useState(false);
@@ -36,7 +36,7 @@ const CourseDetailPage = () => {
     }
   }, [id]);
 
-  // ← NOUVELLE FONCTION : Gérer les vues en localStorage
+  // Gérer les vues en localStorage
   const loadAndIncrementViews = () => {
     // Récupérer les vues depuis localStorage
     const allViews = JSON.parse(localStorage.getItem('courseViews') || '{}');

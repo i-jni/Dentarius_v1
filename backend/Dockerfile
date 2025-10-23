@@ -2,22 +2,23 @@ FROM node:18
 
 WORKDIR /app
 
+# Copier les fichiers package d'abord (pour le cache Docker)
 COPY package*.json ./
 
+# Installer les dépendances
 RUN npm install
 
-COPY . .
-
-COPY .env.prod .env
-
-# Copier le dossier prisma séparément pour générer avant le reste
+# Copier le dossier prisma
 COPY prisma ./prisma
 
-# Génère le client Prisma
+# Générer le client Prisma
 RUN npx prisma generate
 
-# Exposer le port sur lequel le serveur s'exécute
+# Copier le reste du code
+COPY . .
+
+# Exposer le port
 EXPOSE 3001
 
-# Commande pour démarrer l'application
-CMD ["node", "index.js"]
+# Attendre que la DB soit prête et lancer les migrations
+CMD ["sh", "-c", "npx prisma migrate deploy && node index.js"]
