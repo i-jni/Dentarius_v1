@@ -40,7 +40,7 @@ const CreateCoursePage = () => {
         setLevels(levelsData);
         setTopics(topicsData);
       } catch (error) {
-        setError('Erreur lors du chargement des données');
+        setError(`${error} Erreur lors de la chargement des datas `);
       }
     };
     

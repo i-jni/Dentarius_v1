@@ -8,7 +8,7 @@ import styles from './CourseDetailPage.module.scss';
 const CourseDetailPage = () => {
   const { id } = useParams();
   const navigate = useNavigate();
-  const { isAuthenticated, user } = useAuthContext();
+  const { isAuthenticated, _user } = useAuthContext();
   
   const [course, setCourse] = useState(null);
   const [views, setViews] = useState(0);  
@@ -91,7 +91,7 @@ const CourseDetailPage = () => {
         state: { message: 'Cours supprimé avec succès !' }
       });
     } catch (error) {
-      setError('Erreur lors de la suppression du cours');
+      setError(`${error} Erreur lors de la suppression du cours`);
     } finally {
       setDeleting(false);
     }
@@ -128,6 +128,8 @@ const CourseDetailPage = () => {
       await navigator.clipboard.writeText(window.location.href);
       alert('Lien copié dans le presse-papiers !');
     } catch (error) {
+      console.log(error);
+      
       // Fallback pour les navigateurs qui ne supportent pas l'API clipboard
       const textArea = document.createElement('textarea');
       textArea.value = window.location.href;

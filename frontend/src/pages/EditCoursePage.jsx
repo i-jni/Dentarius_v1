@@ -9,7 +9,7 @@ import styles from './CreateCoursePage.module.scss'; // Réutilise les mêmes st
 const EditCoursePage = () => {
   const navigate = useNavigate();
   const { id } = useParams();
-  const { isAuthenticated, user } = useAuthContext();
+  const { isAuthenticated } = useAuthContext();
   
   const [formData, setFormData] = useState({
     title: '',

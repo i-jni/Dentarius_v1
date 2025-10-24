@@ -9,7 +9,7 @@ import styles from './CourseListPage.module.scss';
 
 const CourseListPage = () => {
   const location = useLocation();
-  const navigate = useNavigate();
+  const _navigate = useNavigate();
   const { isAuthenticated, user } = useAuthContext();
   const [courses, setCourses] = useState([]);
   const [loading, setLoading] = useState(true);
@@ -53,7 +53,8 @@ const CourseListPage = () => {
         setUserCourses(userCreatedCourses);
       }
     } catch (error) {
-      setError('Erreur lors du chargement des cours');
+      setError(`${error} Erreur lors de la chargement du cours`);
+      
     } finally {
       setLoading(false);
     }
@@ -97,7 +98,7 @@ const CourseListPage = () => {
       // Recharger la liste
       await loadCourses();
     } catch (error) {
-      setError('Erreur lors de la suppression du cours');
+      setError(`${error} Erreur lors de la suppression du cours`);
     } finally {
       setDeletingId(null);
     }
