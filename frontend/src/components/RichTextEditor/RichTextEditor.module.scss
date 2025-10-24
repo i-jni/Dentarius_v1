@@ -1,156 +1,125 @@
-.mdEditorWrapper {
-  margin-bottom: 1rem;
+.richTextEditor {
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  background: white;
+  overflow: hidden;
   
-  :global(.w-md-editor) {
-    background-color: white;
-    border: 1px solid #dee2e6;
-    border-radius: 0.5rem;
-    
-    .w-md-editor-bar {
-      background-color: #f8f9fa;
-      border-bottom: 1px solid #dee2e6;
-      padding: 0.5rem;
-      
-      svg {
-        width: 16px;
-        height: 16px;
-      }
-      
-      button {
-        padding: 0.25rem 0.5rem;
-        border-radius: 0.25rem;
-        
-        &:hover {
-          background-color: #e9ecef;
-        }
-      }
-
-      // 🎯 CACHER LES BOUTONS INUTILES
-      // Garde seulement : Bold, Italic, Link, Table
-      button[aria-label="Add header text"],
-      button[aria-label="Add strike text"],
-      button[aria-label="Insert code"],
-      button[aria-label="Add quote text"],
-      button[aria-label="Add unordered list"],
-      button[aria-label="Add ordered list"],
-      button[aria-label="Add checked list"],
-      button[aria-label="Insert hr"],
-      button[aria-label="Add title1 text"],
-      button[aria-label="Add title2 text"],
-      button[aria-label="Add title3 text"],
-      button[aria-label="Add title4 text"],
-      button[aria-label="Add title5 text"],
-      button[aria-label="Add title6 text"],
-      button[title="header"],
-      button[title="strike"],
-      button[title="code"],
-      button[title="quote"],
-      button[title="unordered-list"],
-      button[title="ordered-list"],
-      button[title="checked-list"],
-      button[title="hr"],
-      button[title="title1"],
-      button[title="title2"],
-      button[title="title3"],
-      button[title="title4"],
-      button[title="title5"],
-      button[title="title6"] {
-        display: none !important;
-      }
-
-      // Cacher aussi les séparateurs inutiles
-      .w-md-editor-toolbar-divider:nth-child(n+6) {
-        display: none !important;
-      }
-    }
-    
-    .w-md-editor-text-textarea,
-    .w-md-editor-text {
-      font-size: 14px !important;
-      line-height: 1.6 !important;
-      font-family: inherit !important;
-    }
-    
-    .w-md-editor-text-textarea {
-      padding: 1rem !important;
-      
-      &::placeholder {
-        color: #6c757d;
-        font-style: italic;
-      }
-    }
+  &:focus-within {
+    border-color: #007bff;
+    box-shadow: 0 0 0 2px rgba(0, 123, 255, 0.25);
   }
 }
 
-.readOnlyPreview {
-  padding: 1rem;
+.toolbar {
+  display: flex;
+  align-items: center;
+  padding: 8px 12px;
   background: #f8f9fa;
-  border-radius: 0.5rem;
-  border: 1px solid #dee2e6;
+  border-bottom: 1px solid #ddd;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+
+.toolbarGroup {
+  display: flex;
+  gap: 4px;
+}
+
+.toolbarButton {
+  padding: 6px 10px;
+  border: 1px solid transparent;
+  background: white;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 14px;
+  transition: all 0.2s ease;
+  
+  &:hover {
+    background: #e9ecef;
+    border-color: #ddd;
+  }
+  
+  &.active {
+    background: #007bff;
+    color: white;
+    border-color: #007bff;
+  }
+}
+
+.formatSelect {
+  padding: 6px 8px;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  background: white;
+  font-size: 14px;
+  cursor: pointer;
+}
+
+.separator {
+  width: 1px;
+  height: 24px;
+  background: #ddd;
+  margin: 0 4px;
+}
+
+.editor {
+  padding: 16px;
+  min-height: 200px;
+  outline: none;
+  line-height: 1.6;
+  font-family: inherit;
+  font-size: 16px;
+  
+  &:empty::before {
+    content: attr(data-placeholder);
+    color: #999;
+    pointer-events: none;
+  }
+  
+  h1, h2, h3 {
+    margin: 16px 0 8px 0;
+    font-weight: bold;
+  }
+  
+  h1 { font-size: 24px; }
+  h2 { font-size: 20px; }
+  h3 { font-size: 18px; }
+  
+  p {
+    margin: 8px 0;
+  }
+  
+  ul, ol {
+    margin: 8px 0;
+    padding-left: 24px;
+  }
+  
+  strong { font-weight: bold; }
+  em { font-style: italic; }
+  u { text-decoration: underline; }
+}
+
+// Mode readonly - affichage simple
+.readOnlyContent {
   line-height: 1.6;
   
-  :global(.wmde-markdown) {
-    background: transparent;
-    
-    h1, h2, h3, h4, h5, h6 {
-      color: #2c5aa0;
-      margin-top: 1.5rem;
-      margin-bottom: 0.5rem;
-      
-      &:first-child {
-        margin-top: 0;
-      }
-    }
-    
-    p {
-      margin-bottom: 1rem;
-      line-height: 1.6;
-    }
-    
-    ul, ol {
-      margin-bottom: 1rem;
-      padding-left: 1.5rem;
-    }
-    
-    li {
-      margin-bottom: 0.25rem;
-    }
-    
-    a {
-      color: #2c5aa0;
-      text-decoration: underline;
-      
-      &:hover {
-        color: #1e3d6f;
-      }
-    }
-    
-    code {
-      background: #e9ecef;
-      padding: 0.125rem 0.25rem;
-      border-radius: 0.25rem;
-      font-size: 0.875em;
-    }
-    
-    pre {
-      background: #f8f9fa;
-      border: 1px solid #dee2e6;
-      border-radius: 0.5rem;
-      padding: 1rem;
-      overflow-x: auto;
-      
-      code {
-        background: transparent;
-        padding: 0;
-      }
-    }
-    
-    blockquote {
-      border-left: 4px solid #2c5aa0;
-      background-color: #f8f9fa;
-      padding: 0.75rem 1rem;
-      margin: 1rem 0;
-      border-radius: 0 0.25rem 0.25rem 0;
-    }
+  h1, h2, h3 {
+    margin: 16px 0 8px 0;
+    font-weight: bold;
   }
+  
+  h1 { font-size: 24px; }
+  h2 { font-size: 20px; }
+  h3 { font-size: 18px; }
+  
+  p { margin: 8px 0; }
+  
+  ul, ol {
+    margin: 8px 0;
+    padding-left: 24px;
+  }
+  
+  strong { font-weight: bold; }
+  em { font-style: italic; }
+  u { text-decoration: underline; }
 }

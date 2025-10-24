@@ -190,12 +190,11 @@ const EditCoursePage = () => {
           {/* Description */}
                <div className={styles.formGroup}>
                         <label htmlFor="description">Description</label>
-                        <RichTextEditor
-                          value={formData.description}
-                          onChange={(content) => setFormData(prev => ({ ...prev, description: content }))}
-                          placeholder="Décrivez le contenu du cours..."
-                          minHeight="200px"
-                        />
+                          <RichTextEditor
+                        value={formData.description}
+                        onChange={(content) => setFormData(prev => ({ ...prev, description: content }))}
+                        placeholder="Décrivez le contenu du cours..."
+                      />
                       </div>
 
           {/* Niveau */}

@@ -1,184 +1,59 @@
 name: 🚀 Deploy Dentarius to Production
-
 on:
   push:
     branches: [ main ]
   workflow_dispatch:
-
 jobs:
   deploy:
-    name: 🔥 Smart Deploy
+    name: 🔥 Deploy to Server
     runs-on: ubuntu-latest
-    
-    env:
-      NODE_OPTIONS: "--max_old_space_size=4096"
-    
+   
     steps:
-    # ==========================================
-    # 1. CHECKOUT & SETUP
-    # ==========================================
-    - name: 📥 Checkout code
-      uses: actions/checkout@v3
-      with:
-        fetch-depth: 2  # Pour détecter les changements
-    
-    - name: 🔧 Setup Node.js
-      uses: actions/setup-node@v3
-      with:
-        node-version: '18'
-        cache: 'npm'
-        cache-dependency-path: frontend/package-lock.json
-    
-    # ==========================================
-    # 2. DETECT CHANGES
-    # ==========================================
-    - name: 🔍 Detect Changes
-      id: changes
-      run: |
-        # Vérifier les changements frontend
-        if git diff --name-only HEAD~1 HEAD | grep -q '^frontend/'; then
-          echo "frontend_changed=true" >> $GITHUB_OUTPUT
-          echo "📦 Frontend changes detected"
-        else
-          echo "frontend_changed=false" >> $GITHUB_OUTPUT
-          echo "✅ No frontend changes"
-        fi
-        
-        # Vérifier les changements backend
-        if git diff --name-only HEAD~1 HEAD | grep -q '^backend/'; then
-          echo "backend_changed=true" >> $GITHUB_OUTPUT
-          echo "🔧 Backend changes detected"
-        else
-          echo "backend_changed=false" >> $GITHUB_OUTPUT
-          echo "✅ No backend changes"
-        fi
-    
-    # ==========================================
-    # 3. BUILD FRONTEND (si changements)
-    # ==========================================
-    - name: 📦 Install Frontend Dependencies
-      if: steps.changes.outputs.frontend_changed == 'true'
-      working-directory: ./frontend
-      run: |
-        npm ci --prefer-offline --no-audit
-    
-    - name: 🏗️ Build Frontend
-      if: steps.changes.outputs.frontend_changed == 'true'
-      working-directory: ./frontend
-      run: |
-        VITE_API_URL=https://dentarius.org/api npm run build
-      timeout-minutes: 10
-    
-    - name: 📊 Build size report
-      if: steps.changes.outputs.frontend_changed == 'true'
-      working-directory: ./frontend
-      run: |
-        echo "📦 Build completed!"
-        du -sh dist/
-        ls -lh dist/assets/ | head -10
-    
-    # ==========================================
-    # 4. DEPLOY TO SERVER
-    # ==========================================
-    - name: 🚀 Deploy to Server
+    - name: 🚀 Deploy to Production Server
       uses: appleboy/ssh-action@v1.0.3
       with:
         host: ${{ secrets.HOST }}
         username: ${{ secrets.USERNAME }}
         key: ${{ secrets.SSH_KEY }}
         script: |
+          echo "🔄 Starting deployment..."
+         
+          # Navigate to project
           cd /var/www/Dentarius_v1
-          
-          echo "🔄 Pulling latest code..."
+         
+          # Force reset to match GitHub
+          echo "🔄 Resetting to latest GitHub version..."
           git fetch origin
           git reset --hard origin/main
-          
-          FRONTEND_CHANGED="${{ steps.changes.outputs.frontend_changed }}"
-          BACKEND_CHANGED="${{ steps.changes.outputs.backend_changed }}"
-          
-          # Deploy Backend si changements
-          if [ "$BACKEND_CHANGED" = "true" ]; then
-            echo "🔧 Deploying backend..."
-            cd backend
-            export $(cat .env.production | xargs)
-            
-            # Installation rapide avec timeout
-            timeout 120s npm install --omit=dev --prefer-offline --no-audit || {
-              echo "⚠️ npm install timeout, keeping existing node_modules"
-            }
-            
-            pm2 restart dentarius-backend
-            echo "✅ Backend deployed"
-            cd ..
-          else
-            echo "⏭️ Backend unchanged, skipping"
-          fi
-          
-          # Préparer frontend si changements
-          if [ "$FRONTEND_CHANGED" = "true" ]; then
-            echo "🎨 Preparing frontend deployment..."
-            cd frontend
-            
-            # Backup
-            if [ -d "dist" ]; then
-              rm -rf dist.backup
-              mv dist dist.backup
-            fi
-            
-            mkdir -p dist
-            echo "✅ Frontend prepared"
-          else
-            echo "⏭️ Frontend unchanged, skipping"
-          fi
-    
-    # ==========================================
-    # 5. TRANSFER FRONTEND (si changements)
-    # ==========================================
-    - name: 📤 Transfer Frontend Build
-      if: steps.changes.outputs.frontend_changed == 'true'
-      uses: appleboy/scp-action@v0.1.7
-      with:
-        host: ${{ secrets.HOST }}
-        username: ${{ secrets.USERNAME }}
-        key: ${{ secrets.SSH_KEY }}
-        source: "frontend/dist/*"
-        target: "/var/www/Dentarius_v1/"
-        strip_components: 1
-        overwrite: true
-    
-    # ==========================================
-    # 6. FINALIZE
-    # ==========================================
-    - name: ♻️ Finalize Deployment
-      uses: appleboy/ssh-action@v1.0.3
-      with:
-        host: ${{ secrets.HOST }}
-        username: ${{ secrets.USERNAME }}
-        key: ${{ secrets.SSH_KEY }}
-        script: |
-          FRONTEND_CHANGED="${{ steps.changes.outputs.frontend_changed }}"
-          BACKEND_CHANGED="${{ steps.changes.outputs.backend_changed }}"
-          
-          # Reload Nginx si frontend changé
-          if [ "$FRONTEND_CHANGED" = "true" ]; then
-            echo "♻️ Reloading Nginx..."
-            sudo systemctl reload nginx
-          fi
-          
-          echo ""
-          echo "✅ Deployment completed!"
-          
-          if [ "$FRONTEND_CHANGED" = "true" ]; then
-            echo "   📦 Frontend: DEPLOYED"
-          else
-            echo "   📦 Frontend: NO CHANGES"
-          fi
-          
-          if [ "$BACKEND_CHANGED" = "true" ]; then
-            echo "   🔧 Backend: DEPLOYED"
-          else
-            echo "   🔧 Backend: NO CHANGES"
-          fi
-          
-          echo ""
-          echo "🌐 Site: https://dentarius.org"
+         
+          # Backend deployment
+          echo "🔧 Updating backend..."
+          cd backend
+          export $(cat .env.production | xargs)
+          npm install --omit=dev
+          pm2 restart dentarius-backend
+         
+          # Frontend deployment
+          echo "🎨 Building frontend..."
+          cd ../frontend
+         
+          # Clean install
+          echo "🧹 Cleaning..."
+          rm -rf node_modules package-lock.json
+         
+          echo "📦 Installing ALL dependencies (including dev)..."
+          NODE_ENV=development npm install
+         
+          echo "🔍 Verifying Vite installation..."
+          npm list vite
+          ls -la node_modules/.bin/vite
+         
+          echo "🏗️ Building with Vite..."
+          VITE_API_URL=https://dentarius.org/api npm run build
+         
+          # Restart services
+          echo "♻️ Restarting services..."
+          sudo systemctl reload nginx
+         
+          echo "✅ Deployment completed successfully!"
+          echo "🌐 Site available at: https://dentarius.org"
