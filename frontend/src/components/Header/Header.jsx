@@ -27,7 +27,7 @@ const Header = () => {
         <div className={styles.headerContent}>
           {/* Logo */}
           <Link to="/" className={styles.logo} onClick={closeMenu}>
-            Dentarius
+           <img src="/images/loogo.png" alt="Logo Dentarius" className={styles.logoImage} />
           </Link>
           
           {/* Menu Burger Button */}

@@ -1,4 +1,4 @@
-// src/pages/RegisterPage.jsx
+
 import { useState, useEffect } from 'react';
 import { useNavigate, Link } from 'react-router-dom';
 import { useAuthContext } from '../context/AuthContext';
@@ -15,7 +15,8 @@ const RegisterPage = () => {
     password: '',
     confirmPassword: '',
     countryId: '',
-    levelId: '' // Ajout du champ levelId (optionnel)
+    levelId: '',
+    acceptRgpd: false  // 🆕 Nouveau champ RGPD
   });
   const [error, setError] = useState('');
   const [loading, setLoading] = useState(false);
@@ -44,6 +45,7 @@ const RegisterPage = () => {
   });
 
   console.log('Niveaux errors:', levelsError);
+  
   // Définir le premier pays comme valeur par défaut une fois les données chargées
   useEffect(() => {
     if (countries && countries.length > 0 && !formData.countryId) {
@@ -52,13 +54,22 @@ const RegisterPage = () => {
   }, [countries]);
   
   const handleChange = (e) => {
-    const { name, value } = e.target;
-    setFormData(prev => ({ ...prev, [name]: value }));
+    const { name, value, type, checked } = e.target;
+    setFormData(prev => ({ 
+      ...prev, 
+      [name]: type === 'checkbox' ? checked : value  // 🆕 Gestion checkbox
+    }));
   };
   
   const handleSubmit = async (e) => {
     e.preventDefault();
     setError('');
+    
+    // 🆕 Validation RGPD
+    if (!formData.acceptRgpd) {
+      setError('Vous devez accepter les conditions RGPD pour créer un compte');
+      return;
+    }
     
     // Validation de base
     if (formData.password !== formData.confirmPassword) {
@@ -75,7 +86,7 @@ const RegisterPage = () => {
         lastName: formData.lastName,
         email: formData.email,
         password: formData.password,
-        countryId: parseInt(formData.countryId) // Convertir en nombre
+        countryId: parseInt(formData.countryId)
       };
       
       console.log('Données d\'inscription envoyées:', userData);
@@ -235,11 +246,37 @@ const RegisterPage = () => {
                   required={false}
                 />
                 
+                {/* 🆕 CASE RGPD */}
+                <div className="form__group">
+                  <label className="form__checkbox-label">
+                    <input
+                      type="checkbox"
+                      name="acceptRgpd"
+                      checked={formData.acceptRgpd}
+                      onChange={handleChange}
+                      className="form__checkbox"
+                      required
+                    />
+                    <span className="form__checkbox-text">
+                      J'accepte les{' '}
+                      <Link 
+                        to="/mentions-legales" 
+                        target="_blank" 
+                        rel="noopener noreferrer"
+                        className="form__link"
+                      >
+                        conditions RGPD et mentions légales
+                      </Link>
+                      {' '}<span className="form__required">*</span>
+                    </span>
+                  </label>
+                </div>
+                
                 <div className="form__actions">
                   <button
                     type="submit"
                     className="btn btn--primary btn--block"
-                    disabled={loading || countriesLoading}
+                    disabled={loading || countriesLoading || !formData.acceptRgpd}  // 🆕 Désactivé si RGPD pas accepté
                   >
                     {loading ? 'Inscription en cours...' : 'S\'inscrire'}
                   </button>
