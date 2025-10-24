@@ -6,6 +6,7 @@ import CourseImage from '../components/CourseImage/CourseImage';
 import SimpleSearch from '../components/SimpleSearch/SimpleSearch';
 import useSimpleSearch from '../hooks/useSimpleSearch';
 import styles from './CourseListPage.module.scss';
+import RichTextEditor from '../components/RichTextEditor/RichTextEditor';
 
 const CourseListPage = () => {
   const location = useLocation();
@@ -200,9 +201,18 @@ const CourseListPage = () => {
                   
                 <div className={styles.courseContent}>  
                   <h3>{course.title}</h3>  
-                  <p className={styles.description}>  
-                    {course.description || 'Aucune description disponible'}  
-                  </p>  
+                <div className={styles.description}>    
+              <RichTextEditor  
+                value={course.description ?   
+                  (course.description.length > 40 ?   
+                    course.description.substring(0, 40) + '...' :   
+                    course.description  
+                  ) :   
+                  'Aucune description disponible'  
+                }  
+                readOnly={true}  
+  /> 
+              </div>  
             
                   <div className={styles.meta}>  
                     <span className={styles.level}>  

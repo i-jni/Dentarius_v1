@@ -5,6 +5,7 @@ import { levelService } from '../api/levelService';
 import { topicService } from '../api/topicService';
 import { useAuthContext } from '../context/AuthContext';
 import styles from './CreateCoursePage.module.scss'; // Réutilise les mêmes styles
+import RichTextEditor from '../components/RichTextEditor/RichTextEditor';
 
 const EditCoursePage = () => {
   const navigate = useNavigate();
@@ -187,17 +188,15 @@ const EditCoursePage = () => {
           </div>
 
           {/* Description */}
-          <div className={styles.formGroup}>
-            <label htmlFor="description">Description</label>
-            <textarea
-              id="description"
-              name="description"
-              value={formData.description}
-              onChange={handleInputChange}
-              placeholder="Décrivez le contenu du cours..."
-              rows="6"
-            />
-          </div>
+               <div className={styles.formGroup}>
+                        <label htmlFor="description">Description</label>
+                        <RichTextEditor
+                          value={formData.description}
+                          onChange={(content) => setFormData(prev => ({ ...prev, description: content }))}
+                          placeholder="Décrivez le contenu du cours..."
+                          minHeight="200px"
+                        />
+                      </div>
 
           {/* Niveau */}
           <div className={styles.formGroup}>

@@ -1,0 +1,156 @@
+.mdEditorWrapper {
+  margin-bottom: 1rem;
+  
+  :global(.w-md-editor) {
+    background-color: white;
+    border: 1px solid #dee2e6;
+    border-radius: 0.5rem;
+    
+    .w-md-editor-bar {
+      background-color: #f8f9fa;
+      border-bottom: 1px solid #dee2e6;
+      padding: 0.5rem;
+      
+      svg {
+        width: 16px;
+        height: 16px;
+      }
+      
+      button {
+        padding: 0.25rem 0.5rem;
+        border-radius: 0.25rem;
+        
+        &:hover {
+          background-color: #e9ecef;
+        }
+      }
+
+      // 🎯 CACHER LES BOUTONS INUTILES
+      // Garde seulement : Bold, Italic, Link, Table
+      button[aria-label="Add header text"],
+      button[aria-label="Add strike text"],
+      button[aria-label="Insert code"],
+      button[aria-label="Add quote text"],
+      button[aria-label="Add unordered list"],
+      button[aria-label="Add ordered list"],
+      button[aria-label="Add checked list"],
+      button[aria-label="Insert hr"],
+      button[aria-label="Add title1 text"],
+      button[aria-label="Add title2 text"],
+      button[aria-label="Add title3 text"],
+      button[aria-label="Add title4 text"],
+      button[aria-label="Add title5 text"],
+      button[aria-label="Add title6 text"],
+      button[title="header"],
+      button[title="strike"],
+      button[title="code"],
+      button[title="quote"],
+      button[title="unordered-list"],
+      button[title="ordered-list"],
+      button[title="checked-list"],
+      button[title="hr"],
+      button[title="title1"],
+      button[title="title2"],
+      button[title="title3"],
+      button[title="title4"],
+      button[title="title5"],
+      button[title="title6"] {
+        display: none !important;
+      }
+
+      // Cacher aussi les séparateurs inutiles
+      .w-md-editor-toolbar-divider:nth-child(n+6) {
+        display: none !important;
+      }
+    }
+    
+    .w-md-editor-text-textarea,
+    .w-md-editor-text {
+      font-size: 14px !important;
+      line-height: 1.6 !important;
+      font-family: inherit !important;
+    }
+    
+    .w-md-editor-text-textarea {
+      padding: 1rem !important;
+      
+      &::placeholder {
+        color: #6c757d;
+        font-style: italic;
+      }
+    }
+  }
+}
+
+.readOnlyPreview {
+  padding: 1rem;
+  background: #f8f9fa;
+  border-radius: 0.5rem;
+  border: 1px solid #dee2e6;
+  line-height: 1.6;
+  
+  :global(.wmde-markdown) {
+    background: transparent;
+    
+    h1, h2, h3, h4, h5, h6 {
+      color: #2c5aa0;
+      margin-top: 1.5rem;
+      margin-bottom: 0.5rem;
+      
+      &:first-child {
+        margin-top: 0;
+      }
+    }
+    
+    p {
+      margin-bottom: 1rem;
+      line-height: 1.6;
+    }
+    
+    ul, ol {
+      margin-bottom: 1rem;
+      padding-left: 1.5rem;
+    }
+    
+    li {
+      margin-bottom: 0.25rem;
+    }
+    
+    a {
+      color: #2c5aa0;
+      text-decoration: underline;
+      
+      &:hover {
+        color: #1e3d6f;
+      }
+    }
+    
+    code {
+      background: #e9ecef;
+      padding: 0.125rem 0.25rem;
+      border-radius: 0.25rem;
+      font-size: 0.875em;
+    }
+    
+    pre {
+      background: #f8f9fa;
+      border: 1px solid #dee2e6;
+      border-radius: 0.5rem;
+      padding: 1rem;
+      overflow-x: auto;
+      
+      code {
+        background: transparent;
+        padding: 0;
+      }
+    }
+    
+    blockquote {
+      border-left: 4px solid #2c5aa0;
+      background-color: #f8f9fa;
+      padding: 0.75rem 1rem;
+      margin: 1rem 0;
+      border-radius: 0 0.25rem 0.25rem 0;
+    }
+  }
+}
