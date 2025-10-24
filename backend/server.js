@@ -14,11 +14,35 @@ import topicRouter from "./routes/topic.js";
 const app = express();
 const router = express.Router();
 
-router.use(cors({
-  origin:'*',
+// CORS intelligent selon l'environnement
+const corsOptions = {
+  origin: (origin, callback) => {
+    // En développement, tout passer
+    if (process.env.NODE_ENV !== 'production') {
+      return callback(null, true);
+    }
+    
+    // En production, vérifier l'origine
+    const allowedOrigins = ['https://dentarius.org'];
+    
+    // Si pas d'origine (requête directe) → bloquer
+    if (!origin) {
+      return callback(new Error('Accès direct non autorisé'), false);
+    }
+    
+    // Si origine autorisée → OK
+    if (allowedOrigins.includes(origin)) {
+      return callback(null, true);
+    }
+    
+    // Sinon → bloquer
+    callback(new Error('Non autorisé par CORS'), false);
+  },
   methods: ['GET', 'POST', 'PUT', 'DELETE'],
   credentials: true,
-}));
+};
+
+router.use(cors(corsOptions));
 router.use(express.json());
 
 // Setup Swagger  
@@ -35,4 +59,4 @@ router.use(errorRouter);
 
 app.use("/api", router);
 
-export default app ;
+export default app;
