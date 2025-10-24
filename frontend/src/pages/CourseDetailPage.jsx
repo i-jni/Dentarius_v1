@@ -4,6 +4,7 @@ import { courseService } from '../api/courseService';
 import { useAuthContext } from '../context/AuthContext';
 import CourseImage from '../components/CourseImage/CourseImage';
 import styles from './CourseDetailPage.module.scss';
+import RichTextEditor from '../components/RichTextEditor/RichTextEditor';
 
 const CourseDetailPage = () => {
   const { id } = useParams();
@@ -244,9 +245,12 @@ const CourseDetailPage = () => {
           <section className={styles.description}>
             <h2>Description</h2>
             <div className={styles.descriptionText}>
-              {course.description ? (
-                <p>{course.description}</p>
-              ) : (
+              {course.description ?     <div className={styles.description}>    
+                 <RichTextEditor
+                  value={course.description}  
+                  readOnly={true}  
+                    />  
+                  </div>   : (
                 <p className={styles.noDescription}>
                   Aucune description disponible pour ce cours.
                 </p>
