@@ -6,11 +6,51 @@ on:
   workflow_dispatch:
 
 jobs:
-  deploy:
-    name: 🔥 Deploy to Server
+  build-and-deploy:
+    name: 🔥 Build & Deploy
     runs-on: ubuntu-latest
     
+    env:
+      NODE_OPTIONS: "--max_old_space_size=4096"
+    
     steps:
+    # ==========================================
+    # 1. CHECKOUT & SETUP
+    # ==========================================
+    - name: 📥 Checkout code
+      uses: actions/checkout@v3
+    
+    - name: 🔧 Setup Node.js
+      uses: actions/setup-node@v3
+      with:
+        node-version: '18'
+        cache: 'npm'
+        cache-dependency-path: frontend/package-lock.json
+    
+    # ==========================================
+    # 2. BUILD FRONTEND (sur GitHub, pas le serveur!)
+    # ==========================================
+    - name: 📦 Install Frontend Dependencies
+      working-directory: ./frontend
+      run: |
+        npm ci --prefer-offline --no-audit
+    
+    - name: 🏗️ Build Frontend
+      working-directory: ./frontend
+      run: |
+        VITE_API_URL=https://dentarius.org/api npm run build
+      timeout-minutes: 10
+    
+    - name: 📊 Build size report
+      working-directory: ./frontend
+      run: |
+        echo "📦 Build completed!"
+        du -sh dist/
+        ls -lh dist/assets/ | head -10
+    
+    # ==========================================
+    # 3. DEPLOY TO SERVER
+    # ==========================================
     - name: 🚀 Deploy to Production Server
       uses: appleboy/ssh-action@v1.0.3
       with:
@@ -23,8 +63,8 @@ jobs:
           # Navigate to project
           cd /var/www/Dentarius_v1
           
-          # Force reset to match GitHub
-          echo "🔄 Resetting to latest GitHub version..."
+          # Pull latest code (pour le backend)
+          echo "📥 Pulling latest code..."
           git fetch origin
           git reset --hard origin/main
           
@@ -32,30 +72,55 @@ jobs:
           echo "🔧 Updating backend..."
           cd backend
           export $(cat .env.production | xargs)
-          npm install --omit=dev
+          npm install --omit=dev --prefer-offline
           pm2 restart dentarius-backend
           
-          # Frontend deployment
-          echo "🎨 Building frontend..."
+          # Prepare frontend folder
+          echo "🎨 Preparing frontend deployment..."
           cd ../frontend
           
-          # Clean install
-          echo "🧹 Cleaning..."
-          rm -rf node_modules package-lock.json
+          # Backup old build (just in case)
+          if [ -d "dist" ]; then
+            echo "💾 Backing up old build..."
+            rm -rf dist.backup
+            mv dist dist.backup
+          fi
           
-          echo "📦 Installing ALL dependencies (including dev)..."
-          NODE_ENV=development npm install
+          mkdir -p dist
           
-          echo "🔍 Verifying Vite installation..."
-          npm list vite
-          ls -la node_modules/.bin/vite
-          
-          echo "🏗️ Building with Vite..."
-          VITE_API_URL=https://dentarius.org/api npm run build
-          
-          # Restart services
-          echo "♻️ Restarting services..."
+          echo "✅ Server preparation completed!"
+    
+    # ==========================================
+    # 4. TRANSFER BUILD FILES
+    # ==========================================
+    - name: 📤 Transfer Frontend Build
+      uses: appleboy/scp-action@v0.1.7
+      with:
+        host: ${{ secrets.HOST }}
+        username: ${{ secrets.USERNAME }}
+        key: ${{ secrets.SSH_KEY }}
+        source: "frontend/dist/*"
+        target: "/var/www/Dentarius_v1/"
+        strip_components: 1
+        overwrite: true
+    
+    # ==========================================
+    # 5. FINALIZE
+    # ==========================================
+    - name: ♻️ Restart Services
+      uses: appleboy/ssh-action@v1.0.3
+      with:
+        host: ${{ secrets.HOST }}
+        username: ${{ secrets.USERNAME }}
+        key: ${{ secrets.SSH_KEY }}
+        script: |
+          echo "♻️ Restarting Nginx..."
           sudo systemctl reload nginx
           
           echo "✅ Deployment completed successfully!"
           echo "🌐 Site available at: https://dentarius.org"
+          
+          # Verify deployment
+          cd /var/www/Dentarius_v1/frontend
+          echo "📊 Deployed files:"
+          ls -lh dist/
