@@ -32,7 +32,7 @@ const Footer = () => {
             <div className={styles.linkColumn}>
               <h3 className={styles.linkTitle}>Légal</h3>
               <ul className={styles.linkList}>
-                <li><Link to="/mentions">Mentions légales</Link></li>
+                <li><Link to="/mentions-legales">Mentions légales</Link></li>
                 <li><Link to="/confidentialite">Politique de confidentialité</Link></li>
               </ul>
             </div>

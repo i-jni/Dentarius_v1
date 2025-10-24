@@ -39,6 +39,8 @@ const RichTextEditor = ({
             selection.removeAllRanges();
             selection.addRange(range);
           } catch (e) {
+            console.log(e);
+            
             // Si erreur, placer le curseur à la fin
             const newRange = document.createRange();
             newRange.selectNodeContents(editorRef.current);
@@ -107,6 +109,7 @@ const RichTextEditor = ({
   };
 
   const handleContextMenu = (e) => {
+    console.log(e);
     // Permettre le menu contextuel (clic droit)
     // pour copier/coller/sélectionner tout
   };

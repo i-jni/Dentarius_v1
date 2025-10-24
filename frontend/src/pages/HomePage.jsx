@@ -21,22 +21,22 @@ const HomePage = () => {
   // Données pour les témoignages
   const testimonials = [
     {
-      quote: "Dentarius m'a permis de réviser efficacement pour mes examens. Les cours sont clairs et bien structurés.",
-      author: "Sophie Martin",
+      quote: "Dentarius m'a permis d'aider les autres étudiants avec une simple action: le partage.",
+      author: "Sarah Martin",
       role: "Étudiante en 3ème année",
-      avatar: "https://randomuser.me/api/portraits/women/44.jpg"
+      avatar: "/images/testimonial/dentarius2.jpg"
     },
     {
       quote: "Une plateforme indispensable pour tout étudiant en dentaire. J'ai pu améliorer mes résultats grâce aux ressources disponibles.",
       author: "Thomas Dubois",
       role: "Étudiant en 4ème année",
-      avatar: "https://randomuser.me/api/portraits/men/32.jpg"
+      avatar: "/images/testimonial/dentarius1.jpg"
     },
     {
       quote: "Les cours sont à jour et suivent parfaitement le programme. Je recommande vivement !",
-      author: "Emma Petit",
+      author: "Hawa Petit",
       role: "Étudiante en 2ème année",
-      avatar: "https://randomuser.me/api/portraits/women/66.jpg"
+      avatar: "/images/testimonial/dentarius4.jpg"
     }
   ];
   
@@ -44,7 +44,7 @@ const HomePage = () => {
   const faqItems = [
     {
       title: "Comment accéder aux cours ?",
-      content: <p>Pour accéder aux cours, vous devez d'abord créer un compte sur notre plateforme. Une fois connecté, vous pourrez parcourir notre catalogue de cours et y accéder librement.</p>
+      content: <p>Pour accéder aux cours, vous devez d'abord créer un compte sur notre plateforme. Une fois connecté, vous pourrez parcourir le catalogue de cours et y accéder librement, vous pouvez aussi contribuer en ajoutant vos cours.</p>
     },
     {
       title: "Les cours sont-ils gratuits ?",
@@ -56,18 +56,16 @@ const HomePage = () => {
     },
     {
       title: "Comment signaler une erreur dans un cours ?",
-      content: <p>Si vous trouvez une erreur dans un cours, vous pouvez utiliser le bouton "Signaler" présent sur chaque page de cours. Notre équipe pédagogique examinera votre signalement et apportera les corrections nécessaires.</p>
+      content: <p>Fonctionnalité bientôt disponible.</p>
     }
   ];
 
   return (
     <div>
       <TitleAndImage
-        title="Bienvenue sur Dentarius"
-        subtitle="La plateforme d'apprentissage pour les étudiants en dentaire"
-        backgroundImage="https://images.unsplash.com/photo-1576091160550-2173dba999ef?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1470&q=80"
-        ctaLink="/courses"
-        height="large"
+        title="Bienvenue sur Dentarius !"
+        subtitle="La plateforme de partage de cours pour les étudiants en dentaire"
+        backgroundImage= "/images/illustrations/banner.jpg"
       />
       
       <div className="container">
@@ -80,17 +78,17 @@ const HomePage = () => {
         
         <TextMedia
           title="Des cours adaptés à vos besoins"
-          text="Nos cours sont conçus par des professionnels de la dentisterie pour vous aider à réussir vos études. Chaque cours est structuré de manière à faciliter l'apprentissage et la mémorisation des concepts clés."
-          image="https://images.unsplash.com/photo-1576091160550-2173dba999ef?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1470&q=80"
+          text="Nos cours de la dentisterie pour vous aider à réussir vos études. Chaque cours est structuré de manière à faciliter l'apprentissage et la mémorisation des concepts clés."
+          image="/images/illustrations/livres.jpg"
           ctaText="Voir les cours"
           ctaLink="/courses"
         />
         
         <TextMedia
           reverse
-          title="Suivez votre progression"
-          text="Grâce à notre système de suivi, vous pouvez facilement visualiser votre progression et identifier les domaines qui nécessitent plus d'attention. Des quiz réguliers vous permettent de tester vos connaissances."
-          image="https://images.unsplash.com/photo-1454165804606-c3d57bc86b40?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1470&q=80"
+          title="Partagez vos connaissances"
+          text="Nos cours de la dentisterie pour vous aider à réussir vos études. Chaque cours est structuré de manière à faciliter l'apprentissage et la mémorisation des concepts clés.Nos cours de la dentisterie pour vous aider à réussir vos études. Chaque cours est structuré de manière à faciliter l'apprentissage et la mémorisation des concepts clés.Nos cours de la dentisterie pour vous aider à réussir vos études. Chaque cours est structuré de manière à faciliter l'apprentissage et la mémorisation des concepts clés."
+          image= "images/illustrations/reussite.png"
           ctaText="Créer un compte"
           ctaLink="/register"
         />

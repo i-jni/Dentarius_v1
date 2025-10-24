@@ -3,7 +3,7 @@ const StudentListPage = () => {
   return (
     <div className="container">
       <h1>Liste des étudiants</h1>
-      <p>Cette page affichera la liste des étudiants inscrits.</p>
+      <p>Bientôt, tu pourras voir les autres étudiant inscrits...</p>
     </div>
   );
 };

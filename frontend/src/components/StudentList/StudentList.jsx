@@ -13,7 +13,7 @@ const StudentList = () => {
 
   return (
     <div className="student-list">
-      <h2>Liste des étudiants</h2>
+      <h2>Bientot</h2>
       <ul>
         {data.map((student) => (
           <li key={student.id}>

@@ -56,57 +56,71 @@ const Header = () => {
                   Accueil
                 </NavLink>
               </li>
-              <li>
-                <NavLink 
-                  to="/courses" 
-                  className={({ isActive }) => 
-                    isActive ? styles.activeLink : styles.navLink
-                  }
-                >
-                  Cours
-                </NavLink>
-              </li>
+              
+              {/* Pages accessibles seulement si connecté */}
               {isAuthenticated && (
-                <li>
-                  <NavLink 
-                    to="/students" 
-                    className={({ isActive }) => 
-                      isActive ? styles.activeLink : styles.navLink
-                    }
-                  >
-                    Étudiants
-                  </NavLink>
-                </li>
+                <>
+                  <li>
+                    <NavLink 
+                      to="/courses" 
+                      className={({ isActive }) => 
+                        isActive ? styles.activeLink : styles.navLink
+                      }
+                    >
+                      Cours
+                    </NavLink>
+                  </li>
+                  <li>
+                    <NavLink 
+                      to="/students" 
+                      className={({ isActive }) => 
+                        isActive ? styles.activeLink : styles.navLink
+                      }
+                    >
+                      Étudiants
+                    </NavLink>
+                  </li>
+                  <li>
+                    <NavLink 
+                      to="/create-course" 
+                      className={({ isActive }) => 
+                        isActive ? styles.activeLink : styles.navLink
+                      }
+                    >
+                      Créer un cours
+                    </NavLink>
+                  </li>
+                </>
               )}
             </ul>
           </nav>
           
           {/* Actions Auth Desktop */}
           <div className={styles.authActions}>
-        {isAuthenticated ? (  
-    <>  
-      <Link 
-        to="/profile"   
-        className={styles.userNameLink}  
-        title="Voir mon profil"  
-      >  
-        <Avatar  
-          firstName={user?.firstName}  
-          lastName={user?.lastName}  
-          size="small"  
-        />  
-        <span className={styles.userName}>  
-          {user?.firstName || 'Utilisateur'}  
-        </span>  
-      </Link>  
-      <button   
-        className={`btn btn--outline ${styles.authButton}`}  
-        onClick={logout}  
-      >  
-        Déconnexion  
-      </button>  
-    </>  
-  ) : (
+            {isAuthenticated ? (  
+              <>  
+                <Link 
+                  to="/profile"   
+                  className={styles.userNameLink}  
+                  title="Voir mon profil"  
+                >  
+                  <Avatar  
+                    firstName={user?.firstName}  
+                    lastName={user?.lastName}  
+                    size="small"  
+                  />  
+                  <span className={styles.userName}>  
+                    {user?.firstName || 'Utilisateur'}  
+                  </span>  
+                </Link>  
+                <button   
+                  className={`btn btn--outline ${styles.authButton}`}  
+                  onClick={logout}  
+                >  
+                  Déconnexion  
+                </button>  
+              </>  
+            ) : (
               <>
                 <Link 
                   to="/login" 
@@ -141,29 +155,44 @@ const Header = () => {
                   Accueil
                 </NavLink>
               </li>
-              <li>
-                <NavLink 
-                  to="/courses" 
-                  className={({ isActive }) => 
-                    isActive ? styles.activeMobileLink : styles.mobileNavLink
-                  }
-                  onClick={closeMenu}
-                >
-                  Cours
-                </NavLink>
-              </li>
+              
+              {/* Pages mobiles pour connectés */}
               {isAuthenticated && (
-                <li>
-                  <NavLink 
-                    to="/students" 
-                    className={({ isActive }) => 
-                      isActive ? styles.activeMobileLink : styles.mobileNavLink
-                    }
-                    onClick={closeMenu}
-                  >
-                    Étudiants
-                  </NavLink>
-                </li>
+                <>
+                  <li>
+                    <NavLink 
+                      to="/courses" 
+                      className={({ isActive }) => 
+                        isActive ? styles.activeMobileLink : styles.mobileNavLink
+                      }
+                      onClick={closeMenu}
+                    >
+                      Cours
+                    </NavLink>
+                  </li>
+                  <li>
+                    <NavLink 
+                      to="/students" 
+                      className={({ isActive }) => 
+                        isActive ? styles.activeMobileLink : styles.mobileNavLink
+                      }
+                      onClick={closeMenu}
+                    >
+                      Étudiants
+                    </NavLink>
+                  </li>
+                  <li>
+                    <NavLink 
+                      to="/create-course" 
+                      className={({ isActive }) => 
+                        isActive ? styles.activeMobileLink : styles.mobileNavLink
+                      }
+                      onClick={closeMenu}
+                    >
+                      Créer un cours
+                    </NavLink>
+                  </li>
+                </>
               )}
             </ul>
             
