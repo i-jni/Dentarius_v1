@@ -13,7 +13,40 @@ import topicRouter from "./routes/topic.js";
 
 const app = express();
 const router = express.Router();
+//  protection
+router.use((req, res, next) => {
+  const referer = req.headers.referer;
+  const userAgent = req.headers['user-agent'];
+  
+  // Permettre les navigateurs avec referer
+  if (referer && referer.startsWith('https://dentarius.org')) {
+    return next();
+  }
+  
+  // Permettre en développement
+  if (referer && (referer.includes('localhost') || referer.includes('127.0.0.1'))) {
+    return next();
+  }
+  
+  // Bloquer accès direct (pas de referer)
+  if (!referer) {
+    return res.status(403).json({ error: 'Accès direct non autorisé' });
+  }
+  
+  next();
+});
 
+router.use(cors({
+  origin: [
+    'https://dentarius.org',
+    'http://localhost:5173',
+    'http://localhost:3000',
+    'http://127.0.0.1:5173',
+    'http://127.0.0.1:3000'
+  ],
+  methods: ['GET', 'POST', 'PUT', 'DELETE'],
+  credentials: true,
+}));
 router.use(cors({
   origin:[  
     'https://dentarius.org',  
