@@ -200,11 +200,20 @@ const Header = () => {
             <div className={styles.mobileAuthActions}>
               {isAuthenticated ? (
                 <>
-                  <div className={styles.mobileUserInfo}>
-                    <span className={styles.mobileUserName}>
-                      {user?.firstName || 'Utilisateur'}
-                    </span>
-                  </div>
+               <Link 
+                  to="/profile"   
+                  className={styles.userNameLink}  
+                  title="Voir mon profil"  
+                >  
+                  <Avatar  
+                    firstName={user?.firstName}  
+                    lastName={user?.lastName}  
+                    size="small"  
+                  />  
+                  <span className={styles.userName}>  
+                    {user?.firstName || 'Utilisateur'}  
+                  </span>  
+                </Link>  
                   <button 
                     className={`btn btn--outline ${styles.mobileAuthButton}`}
                     onClick={handleLogout}

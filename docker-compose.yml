@@ -14,8 +14,6 @@ services:
       - "3307:3306"
     volumes:
       - mysql-data:/var/lib/mysql
-      # SUPPRIME CETTE LIGNE qui cause le problème :
-      # - ./backend/db/init.sql:/docker-entrypoint-initdb.d/init.sql
     networks:
       - dentarius-network
     healthcheck:

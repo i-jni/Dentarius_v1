@@ -381,7 +381,6 @@ const ProfilePage = () => {
 
           {/* Zone de danger */}
           <div className={styles.section}>
-            {/* <h2 className={styles.dangerTitle}>Zone de danger</h2> */}
             <div className={styles.dangerZone}>
               <div className={styles.dangerInfo}>
                 <h3>Supprimer mon compte</h3>
