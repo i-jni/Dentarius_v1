@@ -24,7 +24,7 @@ describe('Student API', () => {
     const response = await request(app)
       .get('/api/student');
     
-    expect(response.status).toBe(200);
+    expect(response.status).toBe(403); // Accès interdit sans token
     expect(Array.isArray(response.body) || typeof response.body === 'object').toBe(true);
   });
 

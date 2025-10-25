@@ -20,12 +20,12 @@ afterAll((done) => {
 });
 
 describe('API Security', () => {
-  // Test pour vérifier que l'API est accessible
-  test('API should be accessible', async () => {
+  // Test pour vérifier que l'API est accessible ou pas
+  test('API shouldn be accessible', async () => {
     const response = await request(app)
       .get('/api/student');
     
-    expect(response.status).toBe(200);
+    expect(response.status).toBe(403); // Accès interdit sans token
   });
   
   // Test pour vérifier la validation des entrées
