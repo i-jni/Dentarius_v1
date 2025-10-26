@@ -5,9 +5,49 @@ on:
   workflow_dispatch:
 
 jobs:
+  test:
+    name: 🧪 Run Tests
+    runs-on: ubuntu-latest
+    steps:
+    - name: 📥 Checkout Code
+      uses: actions/checkout@v4
+      
+    - name: 🟢 Setup Node.js
+      uses: actions/setup-node@v4
+      with:
+        node-version: '18'
+        cache: 'npm'
+        cache-dependency-path: backend/package-lock.json
+        
+    - name: 📦 Install Backend Dependencies
+      run: |
+        cd backend
+        npm ci
+        
+    - name: 🧪 Run Unit Tests
+      run: |
+        cd backend
+        npm run test:unit
+        
+    - name: 🔒 Run Security Tests
+      run: |
+        cd backend
+        npm run test:security
+        
+    - name: 🔗 Run Integration Tests
+      run: |
+        cd backend
+        npm run test:integration
+        
+    - name: 📊 Generate Coverage Report
+      run: |
+        cd backend
+        npm run test:coverage
+
   deploy:
     name: 🔥 Deploy to Server
     runs-on: ubuntu-latest
+    needs: test  # ✅ Attendre que les tests passent..
     steps:
     - name: 🚀 Deploy to Production Server
       uses: appleboy/ssh-action@v1.0.3
@@ -40,6 +80,13 @@ jobs:
             echo "🔧 Backend files changed - Updating backend..."
             cd backend
             export $(cat .env.production | xargs)
+            
+            # ✅ Tests sur le serveur (optionnel)
+            echo "🧪 Running quick tests on server..."
+            npm install --include=dev
+            npm run test:unit || echo "⚠️ Unit tests failed but continuing..."
+            
+            # Installation production
             npm install --omit=dev
             pm2 restart dentarius-backend
             cd ..
